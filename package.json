@@ -1,0 +1,21 @@
+{
+  "name": "l2-a-module",
+  "version": "1.0.0",
+  "description": "A module that implements perlin noise.",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "lint": "npx eslint ./src || exit 0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patricia Johansson <pj222uc@student.lnu.se>",
+  "contributors": [
+    "Patricia Johansson <pj222uc@student.lnu.se>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.10"
+  }
+}
