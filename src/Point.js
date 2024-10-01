@@ -21,4 +21,5 @@ export class Point {
     this.#x = x
     this.#y = y
   }
+  // TODO: Add getters for x and y?
 }
