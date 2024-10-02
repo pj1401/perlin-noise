@@ -4,6 +4,8 @@
  * @version 1.0.0
  */
 
+// import { Point } from './Point.js'
+
 /**
  * Represents 2D perlin noise.
  */
@@ -28,5 +30,10 @@ export class PerlinNoise {
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
    */
-  findGridPoints (x, y) {}
+  findGridPoints (x, y) {
+    // const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
+
+    // TODO: Get x0 + 1 and y0 + 1.
+    // const point1 = new Point()
+  }
 }
