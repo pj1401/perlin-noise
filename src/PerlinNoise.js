@@ -102,6 +102,16 @@ export class PerlinNoise {
   }
 
   /**
+   * Softens the interpolations.
+   *
+   * @param {number} difference - The difference between points on the x- or y-axis.
+   * @returns {number} The fade value.
+   */
+  fade (difference) {
+    return difference * difference * difference * (difference * (difference * 6 - 15) + 10)
+  }
+
+  /**
    * Compute the dot product between the gradient and the vector.
    *
    * @param {RandomGradient} gradient - The gradient.
