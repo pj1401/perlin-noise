@@ -5,6 +5,7 @@
  */
 
 import { Gradient } from './Gradient.js'
+import { Point } from './Point.js'
 
 /**
  * Represents the gradient of a line.
@@ -20,11 +21,10 @@ export class RandomGradient {
   /**
    * Initialises the object.
    *
-   * @param {number} x - The x-coordinate.
-   * @param {number} y - The y-coordinate.
+   * @param {Point} point - The point on the grid.
    */
-  constructor (x, y) {
-    this.#gradient = this.randomiseGradient(x, y)
+  constructor (point) {
+    this.#gradient = this.randomiseGradient(point.x, point.y)
   }
 
   /**
@@ -34,6 +34,24 @@ export class RandomGradient {
    */
   get gradient () {
     return this.#gradient
+  }
+
+  /**
+   * Returns the x-component.
+   *
+   * @returns {number} x - The x-component.
+   */
+  get x () {
+    return this.#gradient.x
+  }
+
+  /**
+   * Returns the y-component.
+   *
+   * @returns {number} y - The y-component.
+   */
+  get y () {
+    return this.#gradient.y
   }
 
   /**

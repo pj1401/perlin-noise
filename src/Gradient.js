@@ -34,6 +34,24 @@ export class Gradient {
   }
 
   /**
+   * Returns the x-component.
+   *
+   * @returns {number} x - The x-component.
+   */
+  get x () {
+    return this.#x
+  }
+
+  /**
+   * Returns the y-component.
+   *
+   * @returns {number} y - The y-component.
+   */
+  get y () {
+    return this.#y
+  }
+
+  /**
    * Returns a string representing the object.
    *
    * @returns {string} A string that represents the current object.
