@@ -17,8 +17,11 @@ try {
 
   console.log(`${point0}`)
 
-  const perlin = new PerlinNoise(10.0, 20.0)
-  console.log(perlin.valueOf())
+  const perlin0 = new PerlinNoise(1.3, 2.1)
+  const perlin1 = new PerlinNoise(10.0, 20.0)
+
+  console.log(perlin0.valueOf())
+  console.log(perlin1.valueOf())
 } catch (error) {
   console.error(error.message)
 }

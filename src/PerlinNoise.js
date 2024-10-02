@@ -47,14 +47,23 @@ export class PerlinNoise {
     this.#x = x
     this.#y = y
 
+    this.computePerlinNoise()
+  }
+
+  /**
+   * Computes the perlin noise.
+   */
+  computePerlinNoise () {
     this.findGridPoints()
     this.findRandomGradients()
     this.findVectors()
     this.findDotProducts()
 
+    // The fade smoothens the interpolations.
     const fadeX = this.fade(this.#vectors[0].dx)
     const fadeY = this.fade(this.#vectors[0].dy)
 
+    // Determine the interpolations on the x-axis.
     const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
     const interpolationX1 = this.interpolate(this.#dotProducts[2], this.#dotProducts[3], fadeX)
 
@@ -70,7 +79,7 @@ export class PerlinNoise {
     this.#corners = {
       point00: point0,
       point10: new Point(point0.x + 1, point0.y),
-      point01: new Point(point0.x + 1, point0.y + 1),
+      point01: new Point(point0.x, point0.y + 1),
       point11: new Point(point0.x + 1, point0.y + 1)
     }
   }
