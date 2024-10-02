@@ -5,6 +5,7 @@
  */
 
 import { Point } from './Point.js'
+import { RandomGradient } from './RandomGradient.js'
 
 /**
  * Represents 2D perlin noise.
@@ -17,6 +18,11 @@ export class PerlinNoise {
    * @type {[Point]}
    */
   #corners
+
+  /**
+   * @type {[RandomGradient]}
+   */
+  #randomGradients
 
   /**
    * Initialises the object.
@@ -44,5 +50,14 @@ export class PerlinNoise {
     const point3 = new Point(point0.x + 1, point0.y + 1)
 
     this.#corners = [point0, point1, point2, point3]
+  }
+
+  /**
+   * Create random gradients for each corner.
+   */
+  findRandomGradients () {
+    for (const corner of this.#corners) {
+      this.#randomGradients.push(new RandomGradient(corner))
+    }
   }
 }
