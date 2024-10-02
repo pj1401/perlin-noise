@@ -109,6 +109,6 @@ export class PerlinNoise {
    * @returns {number} - The dot product.
    */
   dotProduct (gradient, vector) {
-    return gradient.x * vector.x * gradient.y * vector.y
+    return gradient.x * vector.dx * gradient.y * vector.dy
   }
 }
