@@ -16,14 +16,14 @@ export class PerlinNoise {
   #y
 
   /**
-   * @type {[Point]}
+   * @type {object}
    */
   #corners
 
   /**
    * @type {[RandomGradient]}
    */
-  #randomGradients = []
+  #randomGradients
 
   /**
    * @type {[Vector]}
@@ -67,20 +67,20 @@ export class PerlinNoise {
   findGridPoints () {
     const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
 
-    const point1 = new Point(point0.x + 1, point0.y)
-
-    const point2 = new Point(point0.x, point0.y + 1)
-
-    const point3 = new Point(point0.x + 1, point0.y + 1)
-
-    this.#corners = [point0, point1, point2, point3]
+    this.#corners = {
+      point00: point0,
+      point10: new Point(point0.x + 1, point0.y),
+      point01: new Point(point0.x + 1, point0.y + 1),
+      point11: new Point(point0.x + 1, point0.y + 1)
+    }
   }
 
   /**
    * Create random gradients for each corner.
    */
   findRandomGradients () {
-    for (const corner of this.#corners) {
+    this.#randomGradients = []
+    for (const corner of Object.values(this.#corners)) {
       this.#randomGradients.push(new RandomGradient(corner))
     }
   }
@@ -89,10 +89,10 @@ export class PerlinNoise {
    * Compute the vectors from the corners to (x, y).
    */
   findVectors () {
-    const dx0 = this.#x - this.#corners[0].x
-    const dy0 = this.#y - this.#corners[0].y
-    const dx1 = this.#x - this.#corners[3].x
-    const dy1 = this.#y - this.#corners[3].y
+    const dx0 = this.#x - this.#corners.point00.x
+    const dy0 = this.#y - this.#corners.point00.y
+    const dx1 = this.#x - this.#corners.point11.x
+    const dy1 = this.#y - this.#corners.point11.y
 
     const vector0 = new Vector(dx0, dy0)
     const vector1 = new Vector(dx1, dy0)
