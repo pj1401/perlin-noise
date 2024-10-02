@@ -35,6 +35,8 @@ export class PerlinNoise {
    */
   #dotProducts = []
 
+  #perlinValue
+
   /**
    * Initialises the object.
    *
@@ -49,6 +51,14 @@ export class PerlinNoise {
     this.findRandomGradients()
     this.findVectors()
     this.findDotProducts()
+
+    const fadeX = this.fade(this.#vectors[0].dx)
+    const fadeY = this.fade(this.#vectors[0].dy)
+
+    const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
+    const interpolationX1 = this.interpolate(this.#dotProducts[2], this.#dotProducts[3], fadeX)
+
+    this.#perlinValue = this.interpolate(interpolationX0, interpolationX1, fadeY)
   }
 
   /**
@@ -102,6 +112,28 @@ export class PerlinNoise {
   }
 
   /**
+   * Interpolate between two values.
+   *
+   * @param {number} dotProdA - Dot product.
+   * @param {number} dotProdB - Dot product.
+   * @param {number} fade - The fade value.
+   * @returns {number} The interpolation.
+   */
+  interpolate (dotProdA, dotProdB, fade) {
+    return dotProdA + fade * (dotProdB - dotProdA)
+  }
+
+  /**
+   * Softens the interpolations.
+   *
+   * @param {number} difference - The difference between points on the x- or y-axis.
+   * @returns {number} The fade value.
+   */
+  fade (difference) {
+    return difference * difference * difference * (difference * (difference * 6 - 15) + 10)
+  }
+
+  /**
    * Compute the dot product between the gradient and the vector.
    *
    * @param {RandomGradient} gradient - The gradient.
@@ -110,5 +142,14 @@ export class PerlinNoise {
    */
   dotProduct (gradient, vector) {
     return gradient.x * vector.dx * gradient.y * vector.dy
+  }
+
+  /**
+   * Returns the primitive value of the specified object.
+   *
+   * @returns {number} The primitive value of the specified object.
+   */
+  valueOf () {
+    return this.#perlinValue
   }
 }
