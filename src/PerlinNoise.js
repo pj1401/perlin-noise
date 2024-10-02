@@ -6,6 +6,7 @@
 
 import { Point } from './Point.js'
 import { RandomGradient } from './RandomGradient.js'
+import { Vector } from './Vector.js'
 
 /**
  * Represents 2D perlin noise.
@@ -25,6 +26,11 @@ export class PerlinNoise {
   #randomGradients
 
   /**
+   * @type {[Vector]}
+   */
+  #vectors
+
+  /**
    * Initialises the object.
    *
    * @param {number} x - The x-coordinate.
@@ -35,6 +41,8 @@ export class PerlinNoise {
     this.#y = y
 
     this.findGridPoints()
+    this.findRandomGradients()
+    this.findVectors()
   }
 
   /**
@@ -59,5 +67,22 @@ export class PerlinNoise {
     for (const corner of this.#corners) {
       this.#randomGradients.push(new RandomGradient(corner))
     }
+  }
+
+  /**
+   * Compute the vectors from the corners to (x, y).
+   */
+  findVectors () {
+    const dx0 = this.#x - this.#corners[0].x
+    const dy0 = this.#y - this.#corners[0].y
+    const dx1 = this.#x - this.#corners[3].x
+    const dy1 = this.#y - this.#corners[3].y
+
+    const vector0 = new Vector(dx0, dy0)
+    const vector1 = new Vector(dx1, dy0)
+    const vector2 = new Vector(dx0, dy1)
+    const vector3 = new Vector(dx1, dy1)
+
+    this.#vectors = [vector0, vector1, vector2, vector3]
   }
 }
