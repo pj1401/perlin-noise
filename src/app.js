@@ -14,7 +14,7 @@ try {
 
   const point0 = new Point(1, 2)
 
-  console.log(`(${point0.x}, ${point0.y})`)
+  console.log(`${point0}`)
 } catch (error) {
   console.error(error.message)
 }

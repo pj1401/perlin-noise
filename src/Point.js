@@ -82,4 +82,13 @@ export class Point {
       throw new TypeError('The passed argument is not a number.')
     }
   }
+
+  /**
+   * Returns a string representing the object.
+   *
+   * @returns {string} A string that represents the current object.
+   */
+  toString () {
+    return `(${this.x}, ${this.y})`
+  }
 }
