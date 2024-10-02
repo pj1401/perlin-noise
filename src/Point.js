@@ -29,8 +29,8 @@ export class Point {
    * @param {number} y - The y-coordinate.
    */
   constructor (x, y) {
-    this.#x = x
-    this.#y = y
+    this.x = x
+    this.y = y
   }
 
   /**
@@ -43,11 +43,43 @@ export class Point {
   }
 
   /**
+   * Sets the x-coordinate.
+   *
+   * @param {number} x - The x-coordinate.
+   */
+  set x (x) {
+    this.checkIfNumber(x)
+    this.#x = x
+  }
+
+  /**
    * Returns the y-coordinate.
    *
    * @returns {number} y - The y-coordinate.
    */
   get y () {
     return this.#y
+  }
+
+  /**
+   * Sets the y-coordinate.
+   *
+   * @param {number} y - The y-coordinate.
+   */
+  set y (y) {
+    this.checkIfNumber(y)
+    this.#y = y
+  }
+
+  /**
+   * Determines whether or not the passed argument is a number.
+   *
+   * @param {object} value - The value to be tested.
+   * @throws {TypeError} The passed argument is not a number.
+   */
+  checkIfNumber (value) {
+    if (Number.isNaN(value) || typeof value !== 'number') {
+      throw new TypeError('The passed argument is not a number.')
+    }
   }
 }
