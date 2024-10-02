@@ -8,7 +8,18 @@
  * Represents a point on a grid.
  */
 export class Point {
+  /**
+   * The x-coordinate.
+   *
+   * @type {number}
+   */
   #x
+
+  /**
+   * The y-coordinate.
+   *
+   * @type {number}
+   */
   #y
 
   /**
@@ -21,5 +32,22 @@ export class Point {
     this.#x = x
     this.#y = y
   }
-  // TODO: Add getters for x and y?
+
+  /**
+   * Returns the x-coordinate.
+   *
+   * @returns {number} x - The x-coordinate.
+   */
+  get x () {
+    return this.#x
+  }
+
+  /**
+   * Returns the y-coordinate.
+   *
+   * @returns {number} y - The y-coordinate.
+   */
+  get y () {
+    return this.#y
+  }
 }
