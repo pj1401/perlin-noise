@@ -9,14 +9,14 @@
  */
 export class Vector {
   /**
-   * The x-component.
+   * The dx-component.
    *
    * @type {number}
    */
   #dx
 
   /**
-   * The y-component.
+   * The dy-component.
    *
    * @type {number}
    */
@@ -25,8 +25,8 @@ export class Vector {
   /**
    * Initialises the object.
    *
-   * @param {number} dx - The x-component.
-   * @param {number} dy - The y-component.
+   * @param {number} dx - The dx-component.
+   * @param {number} dy - The dy-component.
    */
   constructor (dx, dy) {
     this.#dx = dx
