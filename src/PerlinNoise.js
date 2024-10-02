@@ -4,7 +4,7 @@
  * @version 1.0.0
  */
 
-// import { Point } from './Point.js'
+import { Point } from './Point.js'
 
 /**
  * Represents 2D perlin noise.
@@ -12,6 +12,11 @@
 export class PerlinNoise {
   #x
   #y
+
+  /**
+   * @type {[Point]}
+   */
+  #corners
 
   /**
    * Initialises the object.
@@ -22,18 +27,22 @@ export class PerlinNoise {
   constructor (x, y) {
     this.#x = x
     this.#y = y
+
+    this.findGridPoints()
   }
 
   /**
-   * Determine coordinates.
-   *
-   * @param {number} x - The x-coordinate.
-   * @param {number} y - The y-coordinate.
+   * Determine the corners.
    */
-  findGridPoints (x, y) {
-    // const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
+  findGridPoints () {
+    const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
 
-    // TODO: Get x0 + 1 and y0 + 1.
-    // const point1 = new Point()
+    const point1 = new Point(point0.x + 1, point0.y)
+
+    const point2 = new Point(point0.x, point0.y + 1)
+
+    const point3 = new Point(point0.x + 1, point0.y + 1)
+
+    this.#corners = [point0, point1, point2, point3]
   }
 }
