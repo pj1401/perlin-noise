@@ -35,6 +35,8 @@ export class PerlinNoise {
    */
   #dotProducts = []
 
+  #perlinValue
+
   /**
    * Initialises the object.
    *
@@ -49,6 +51,23 @@ export class PerlinNoise {
     this.findRandomGradients()
     this.findVectors()
     this.findDotProducts()
+
+    const fadeX = this.fade(this.#vectors[0].dx)
+    const fadeY = this.fade(this.#vectors[0].dy)
+
+    const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
+    const interpolationX1 = this.interpolate(this.#dotProducts[2], this.#dotProducts[3], fadeX)
+
+    this.#perlinValue = this.interpolate(interpolationX0, interpolationX1, fadeY)
+  }
+
+  /**
+   * Returns the value of the perlin noise.
+   *
+   * @returns {number} - The perlin noise value.
+   */
+  get perlinValue () {
+    return this.#perlinValue
   }
 
   /**
