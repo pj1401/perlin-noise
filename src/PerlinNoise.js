@@ -23,12 +23,17 @@ export class PerlinNoise {
   /**
    * @type {[RandomGradient]}
    */
-  #randomGradients
+  #randomGradients = []
 
   /**
    * @type {[Vector]}
    */
   #vectors
+
+  /**
+   * @type {[number]}
+   */
+  #dotProducts = []
 
   /**
    * Initialises the object.
@@ -43,6 +48,7 @@ export class PerlinNoise {
     this.findGridPoints()
     this.findRandomGradients()
     this.findVectors()
+    this.findDotProducts()
   }
 
   /**
@@ -89,7 +95,11 @@ export class PerlinNoise {
   /**
    * Determine the dot products.
    */
-  findDotProducts () {}
+  findDotProducts () {
+    for (let i = 0; i < this.#randomGradients.length; i++) {
+      this.#dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
+    }
+  }
 
   /**
    * Compute the dot product between the gradient and the vector.
