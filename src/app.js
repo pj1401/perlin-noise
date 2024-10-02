@@ -17,6 +17,7 @@ try {
 
   const randomGradient = new RandomGradient(1, 2)
   console.log(`${randomGradient.gradient}`)
+  console.log(randomGradient.x)
 
   console.log(`${point0}`)
 } catch (error) {

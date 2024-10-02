@@ -37,6 +37,24 @@ export class RandomGradient {
   }
 
   /**
+   * Returns the x-component.
+   *
+   * @returns {number} x - The x-component.
+   */
+  get x () {
+    return this.#gradient.x
+  }
+
+  /**
+   * Returns the y-component.
+   *
+   * @returns {number} y - The y-component.
+   */
+  get y () {
+    return this.#gradient.y
+  }
+
+  /**
    * Randomises a gradient.
    *
    * @param {number} x - The x-coordinate.

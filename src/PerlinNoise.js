@@ -85,4 +85,20 @@ export class PerlinNoise {
 
     this.#vectors = [vector0, vector1, vector2, vector3]
   }
+
+  /**
+   * Determine the dot products.
+   */
+  findDotProducts () {}
+
+  /**
+   * Compute the dot product between the gradient and the vector.
+   *
+   * @param {RandomGradient} gradient - The gradient.
+   * @param {Vector} vector - The vector.
+   * @returns {number} - The dot product.
+   */
+  dotProduct (gradient, vector) {
+    return gradient.x * vector.x * gradient.y * vector.y
+  }
 }

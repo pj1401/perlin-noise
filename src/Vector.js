@@ -34,6 +34,24 @@ export class Vector {
   }
 
   /**
+   * Returns the dx-component.
+   *
+   * @returns {number} dx - The dx-component.
+   */
+  get dx () {
+    return this.#dx
+  }
+
+  /**
+   * Returns the dy-component.
+   *
+   * @returns {number} dy - The dy-component.
+   */
+  get dy () {
+    return this.#dy
+  }
+
+  /**
    * Returns a string representing the object.
    *
    * @returns {string} A string that represents the current object.
