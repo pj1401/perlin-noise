@@ -62,15 +62,6 @@ export class PerlinNoise {
   }
 
   /**
-   * Returns the value of the perlin noise.
-   *
-   * @returns {number} - The perlin noise value.
-   */
-  get perlinValue () {
-    return this.#perlinValue
-  }
-
-  /**
    * Determine the corners.
    */
   findGridPoints () {
@@ -151,5 +142,14 @@ export class PerlinNoise {
    */
   dotProduct (gradient, vector) {
     return gradient.x * vector.dx * gradient.y * vector.dy
+  }
+
+  /**
+   * Returns the primitive value of the specified object.
+   *
+   * @returns {number} The primitive value of the specified object.
+   */
+  valueOf () {
+    return this.#perlinValue
   }
 }
