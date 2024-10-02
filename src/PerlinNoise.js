@@ -102,6 +102,18 @@ export class PerlinNoise {
   }
 
   /**
+   * Interpolate between two values.
+   *
+   * @param {number} dotProdA - Dot product.
+   * @param {number} dotProdB - Dot product.
+   * @param {number} fade - The fade value.
+   * @returns {number} The interpolation.
+   */
+  interpolate (dotProdA, dotProdB, fade) {
+    return dotProdA + fade * (dotProdB - dotProdA)
+  }
+
+  /**
    * Softens the interpolations.
    *
    * @param {number} difference - The difference between points on the x- or y-axis.
