@@ -18,6 +18,8 @@ try {
   console.log(`${point0}`)
 
   const perlin0 = new PerlinNoise(1.3, 2.1)
+
+  console.log()
   const perlin1 = new PerlinNoise(10.0, 20.0)
 
   console.log(perlin0.valueOf())
