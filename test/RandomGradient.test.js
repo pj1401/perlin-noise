@@ -10,21 +10,14 @@ import { RandomGradient } from '../src/RandomGradient.js'
 
 test('Generate random gradient', () => {
   const randomGradients = [
-    new RandomGradient(new Point(1, 2)),
-    new RandomGradient(new Point(2, 2)),
-    new RandomGradient(new Point(1, 3)),
-    new RandomGradient(new Point(2, 3))
+    { gradient: new RandomGradient(new Point(1, 2)), expected: { x: 0.101279206, y: 0.994858041 } },
+    { gradient: new RandomGradient(new Point(2, 2)), expected: { x: 0.007886916, y: -0.999968898 } },
+    { gradient: new RandomGradient(new Point(1, 3)), expected: { x: 0.937233865, y: -0.348701422 } },
+    { gradient: new RandomGradient(new Point(2, 3)), expected: { x: -0.037835073, y: 0.999283997 } }
   ]
 
-  expect(randomGradients[0].x).toBeCloseTo(0.101279206)
-  expect(randomGradients[0].y).toBeCloseTo(0.994858041)
-
-  expect(randomGradients[1].x).toBeCloseTo(0.007886916)
-  expect(randomGradients[1].y).toBeCloseTo(-0.999968898)
-
-  expect(randomGradients[2].x).toBeCloseTo(0.937233865)
-  expect(randomGradients[2].y).toBeCloseTo(-0.348701422)
-
-  expect(randomGradients[3].x).toBeCloseTo(-0.037835073)
-  expect(randomGradients[3].y).toBeCloseTo(0.999283997)
+  for (const randomGradient of randomGradients) {
+    expect(randomGradient.gradient.x).toBeCloseTo(randomGradient.expected.x)
+    expect(randomGradient.gradient.y).toBeCloseTo(randomGradient.expected.y)
+  }
 })
