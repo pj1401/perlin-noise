@@ -5,77 +5,65 @@
  * @version 1.0.0
  */
 
+import { Gradient } from '../src/Gradient.js'
 import { PerlinNoise } from '../src/PerlinNoise.js'
+import { Vector } from '../src/Vector.js'
 
 test('Perlin noise values', () => {
-  const perlin0 = new PerlinNoise(1.3, 2.1)
+  const perlinNoises = [
+    { perlin: new PerlinNoise(1.3, 2.1), expected: 0.093744 },
+    { perlin: new PerlinNoise(5.5, 3.7), expected: -0.177968 },
+    { perlin: new PerlinNoise(10.0, 20.0), expected: 0 },
+    { perlin: new PerlinNoise(100.0, 200.0), expected: 0 },
+    { perlin: new PerlinNoise(0.5, 0.5), expected: 0.006776 }
+  ]
 
-  expect(perlin0.valueOf()).toBeCloseTo(0.093744)
-})
-
-test('Perlin noise values', () => {
-  const perlin1 = new PerlinNoise(5.5, 3.7)
-
-  expect(perlin1.valueOf()).toBeCloseTo(-0.177968)
-})
-
-test('Perlin noise values', () => {
-  const perlin2 = new PerlinNoise(10.0, 20.0)
-
-  expect(perlin2.valueOf()).toBeCloseTo(0)
-})
-
-test('Perlin noise values', () => {
-  const perlin3 = new PerlinNoise(100.0, 200.0)
-
-  expect(perlin3.valueOf()).toBeCloseTo(0)
-})
-
-test('Perlin noise values', () => {
-  const perlin4 = new PerlinNoise(0.5, 0.5)
-  expect(perlin4.valueOf()).toBeCloseTo(0.006776)
+  for (const perlinNoise of perlinNoises) {
+    expect(perlinNoise.perlin.valueOf()).toBeCloseTo(perlinNoise.expected)
+  }
 })
 
 test('Dot products', () => {
-  const perlin0 = new PerlinNoise(1.3, 2.1)
+  const perlin = new PerlinNoise(1.3, 2.1)
 
-  const gradients = [
-    { x: 0.101279205538, y: 0.994858041394 },
-    { x: 0.007886915561, y: -0.999968897798 },
-    { x: 0.937233865382, y: -0.348701421821 },
-    { x: -0.037835073065, y: 0.999283997293 },
-    { x: -0.992802137105, y: 0.119766091022 },
-    { x: 0.263549535693, y: -0.964645863639 },
-    { x: 1, y: 0 }
+  const dotProducts = [{
+    gradient: new Gradient(0.101279205538, 0.994858041394),
+    vector: new Vector(0.3, 0.1),
+    expected: 0.1298695658008
+  }, {
+    gradient: new Gradient(0.007886915561, -0.999968897798),
+    vector: new Vector(-0.7, 0.1),
+    expected: -0.1055177306725
+  }, {
+    gradient: new Gradient(0.937233865382, -0.348701421821),
+    vector: new Vector(-0.3, -0.9),
+    expected: 0.0326611200243
+  }, {
+    gradient: new Gradient(-0.037835073065, 0.999283997293),
+    vector: new Vector(-0.7, -0.9),
+    expected: -0.8728710464182
+  }, {
+    gradient: new Gradient(-0.992802137105, 0.119766091022),
+    vector: new Vector(0, 0),
+    expected: 0
+  }, {
+    gradient: new Gradient(0.263549535693, -0.964645863639),
+    vector: new Vector(-1, -1),
+    expected: 0.701096327946
+  }, {
+    gradient: new Gradient(1, 0),
+    vector: new Vector(0.5, 0.5),
+    expected: 0.5
+  }
   ]
 
-  const vectors = [
-    { dx: 0.3, dy: 0.1 },
-    { dx: -0.7, dy: 0.1 },
-    { dx: -0.3, dy: -0.9 },
-    { dx: -0.7, dy: -0.9 },
-    { dx: 0, dy: 0 },
-    { dx: -1, dy: -1 },
-    { dx: 0.5, dy: 0.5 }
-  ]
-
-  const expectedValues = [
-    0.1298695658008,
-    -0.1055177306725,
-    0.032661120024299994,
-    -0.8728710464182,
-    0,
-    0.701096327946,
-    0.5
-  ]
-
-  for (let i = 0; i < gradients.length; i++) {
-    expect(perlin0.dotProduct(gradients[i], vectors[i])).toBeCloseTo(expectedValues[i])
+  for (const dotPorduct of dotProducts) {
+    expect(perlin.dotProduct(dotPorduct.gradient, dotPorduct.vector)).toBeCloseTo(dotPorduct.expected)
   }
 })
 
 test('Fade', () => {
-  const perlin0 = new PerlinNoise(1.3, 2.1)
+  const perlin = new PerlinNoise(1.3, 2.1)
 
   const fadeValues = [
     { difference: 0, expected: 0 },
@@ -86,6 +74,6 @@ test('Fade', () => {
   ]
 
   for (const fadeValue of fadeValues) {
-    expect(perlin0.fade(fadeValue.difference)).toBeCloseTo(fadeValue.expected)
+    expect(perlin.fade(fadeValue.difference)).toBeCloseTo(fadeValue.expected)
   }
 })
