@@ -73,3 +73,19 @@ test('Dot products', () => {
     expect(perlin0.dotProduct(gradients[i], vectors[i])).toBeCloseTo(expectedValues[i])
   }
 })
+
+test('Fade', () => {
+  const perlin0 = new PerlinNoise(1.3, 2.1)
+
+  const fadeValues = [
+    { difference: 0, expected: 0 },
+    { difference: 0.1, expected: 0.00856 },
+    { difference: 0.3, expected: 0.16308 },
+    { difference: 0.5, expected: 0.5 },
+    { difference: 0.7, expected: 0.836912 }
+  ]
+
+  for (const fadeValue of fadeValues) {
+    expect(perlin0.fade(fadeValue.difference)).toBeCloseTo(fadeValue.expected)
+  }
+})
