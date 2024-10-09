@@ -11,8 +11,8 @@ import { PerlinNoise } from './PerlinNoise.js'
 try {
   const point0 = new Point(1, 2)
 
-  const randomGradient = new RandomGradient(1, 2)
-  console.log(`${randomGradient.gradient}`)
+  const randomGradient = new RandomGradient(new Point(1, 2))
+  console.log(`${randomGradient}`)
   console.log(randomGradient.x)
 
   console.log(`${point0}`)
