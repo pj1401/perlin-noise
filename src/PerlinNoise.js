@@ -4,6 +4,7 @@
  * @version 1.0.0
  */
 
+import { GridComponent } from './GridComponent.js'
 import { Point } from './Point.js'
 import { RandomGradient } from './RandomGradient.js'
 import { Vector } from './Vector.js'
@@ -11,10 +12,7 @@ import { Vector } from './Vector.js'
 /**
  * Represents 2D perlin noise.
  */
-export class PerlinNoise {
-  #x
-  #y
-
+export class PerlinNoise extends GridComponent {
   /**
    * @type {object}
    */
@@ -35,6 +33,11 @@ export class PerlinNoise {
    */
   #dotProducts = []
 
+  /**
+   * The perlin value.
+   *
+   * @type {number}
+   */
   #perlinValue
 
   /**
@@ -44,8 +47,7 @@ export class PerlinNoise {
    * @param {number} y - The y-coordinate.
    */
   constructor (x, y) {
-    this.#x = x
-    this.#y = y
+    super(x, y)
 
     this.computePerlinNoise()
   }
@@ -74,7 +76,7 @@ export class PerlinNoise {
    * Determine the corners.
    */
   #findGridPoints () {
-    const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
+    const point0 = new Point(Math.floor(this.x), Math.floor(this.y))
 
     this.#corners = {
       point00: point0,
@@ -98,10 +100,10 @@ export class PerlinNoise {
    * Compute the vectors from the corners to (x, y).
    */
   #findVectors () {
-    const dx0 = this.#x - this.#corners.point00.x
-    const dy0 = this.#y - this.#corners.point00.y
-    const dx1 = this.#x - this.#corners.point11.x
-    const dy1 = this.#y - this.#corners.point11.y
+    const dx0 = this.x - this.#corners.point00.x
+    const dy0 = this.y - this.#corners.point00.y
+    const dx1 = this.x - this.#corners.point11.x
+    const dy1 = this.y - this.#corners.point11.y
 
     const vector0 = new Vector(dx0, dy0)
     const vector1 = new Vector(dx1, dy0)
