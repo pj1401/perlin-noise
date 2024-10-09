@@ -48,7 +48,7 @@ export class Point {
    * @param {number} x - The x-coordinate.
    */
   set x (x) {
-    this.checkIfNumber(x)
+    this.#checkIfNumber(x)
     this.#x = x
   }
 
@@ -67,7 +67,7 @@ export class Point {
    * @param {number} y - The y-coordinate.
    */
   set y (y) {
-    this.checkIfNumber(y)
+    this.#checkIfNumber(y)
     this.#y = y
   }
 
@@ -77,7 +77,7 @@ export class Point {
    * @param {object} value - The value to be tested.
    * @throws {TypeError} The passed argument is not a number.
    */
-  checkIfNumber (value) {
+  #checkIfNumber (value) {
     if (Number.isNaN(value) || typeof value !== 'number') {
       throw new TypeError('The passed argument is not a number.')
     }

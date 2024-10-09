@@ -24,7 +24,7 @@ export class RandomGradient {
    * @param {Point} point - The point on the grid.
    */
   constructor (point) {
-    this.#gradient = this.randomiseGradient(point.x, point.y)
+    this.#gradient = this.#randomiseGradient(point.x, point.y)
   }
 
   /**
@@ -61,8 +61,8 @@ export class RandomGradient {
    * @param {number} y - The y-coordinate.
    * @returns {Gradient} The randomised gradient.
    */
-  randomiseGradient (x, y) {
-    const angle = this.random(x, y) * 2 * Math.PI
+  #randomiseGradient (x, y) {
+    const angle = this.#random(x, y) * 2 * Math.PI
 
     return new Gradient(Math.cos(angle), Math.sin(angle))
   }
@@ -74,7 +74,7 @@ export class RandomGradient {
    * @param {number} y - The y-coordinate.
    * @returns {number} A value between 0 and 1.
    */
-  random (x, y) {
+  #random (x, y) {
     // Prime numbers are used to combine x and y.
     let seed = x * 374761393 + y * 668265263
     seed = (seed ^ (seed >> 13)) * 1274126177

@@ -54,10 +54,10 @@ export class PerlinNoise {
    * Computes the perlin noise.
    */
   computePerlinNoise () {
-    this.findGridPoints()
-    this.findRandomGradients()
-    this.findVectors()
-    this.findDotProducts()
+    this.#findGridPoints()
+    this.#findRandomGradients()
+    this.#findVectors()
+    this.#findDotProducts()
 
     // The fade smoothens the interpolations.
     const fadeX = this.fade(this.#vectors[0].dx)
@@ -73,7 +73,7 @@ export class PerlinNoise {
   /**
    * Determine the corners.
    */
-  findGridPoints () {
+  #findGridPoints () {
     const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
 
     this.#corners = {
@@ -87,7 +87,7 @@ export class PerlinNoise {
   /**
    * Create random gradients for each corner.
    */
-  findRandomGradients () {
+  #findRandomGradients () {
     this.#randomGradients = []
     for (const corner of Object.values(this.#corners)) {
       this.#randomGradients.push(new RandomGradient(corner))
@@ -97,7 +97,7 @@ export class PerlinNoise {
   /**
    * Compute the vectors from the corners to (x, y).
    */
-  findVectors () {
+  #findVectors () {
     const dx0 = this.#x - this.#corners.point00.x
     const dy0 = this.#y - this.#corners.point00.y
     const dx1 = this.#x - this.#corners.point11.x
@@ -114,7 +114,7 @@ export class PerlinNoise {
   /**
    * Determine the dot products.
    */
-  findDotProducts () {
+  #findDotProducts () {
     for (let i = 0; i < this.#randomGradients.length; i++) {
       this.#dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
     }
