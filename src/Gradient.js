@@ -43,12 +43,30 @@ export class Gradient {
   }
 
   /**
+   * Sets the x-coordinate.
+   *
+   * @param {number} x - The x-coordinate.
+   */
+  set x (x) {
+    this.#x = x
+  }
+
+  /**
    * Returns the y-component.
    *
    * @returns {number} y - The y-component.
    */
   get y () {
     return this.#y
+  }
+
+  /**
+   * Sets the y-coordinate.
+   *
+   * @param {number} y - The y-coordinate.
+   */
+  set y (y) {
+    this.#y = y
   }
 
   /**
