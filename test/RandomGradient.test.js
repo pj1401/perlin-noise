@@ -27,3 +27,19 @@ test('Generate random gradient', () => {
     expect(randomGradient.gradient.y).toBeCloseTo(randomGradient.expected.y)
   }
 })
+
+test('Generate random values', () => {
+  const randomGradient = new RandomGradient(new Point(1, 2))
+
+  const testValues = [
+    { x: 1, y: 2, expected: 0.233853228964775 },
+    { x: 5, y: 3, expected: 0.177478756372574 },
+    { x: 10, y: 20, expected: 0.4808927688193 },
+    { x: 100, y: 200, expected: 0.726797822735644 },
+    { x: 0.5, y: 0.5, expected: 0.336138185735856 }
+  ]
+
+  for (const value of testValues) {
+    expect(randomGradient.random(value.x, value.y)).toBeCloseTo(value.expected)
+  }
+})
