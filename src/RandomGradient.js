@@ -4,13 +4,13 @@
  * @version 1.0.0
  */
 
-import { Gradient } from './Gradient.js'
 import { Point } from './Point.js'
+import { Vector } from './Vector.js'
 
 /**
  * Represents the gradient of a line.
  */
-export class RandomGradient extends Gradient {
+export class RandomGradient extends Vector {
   /**
    * Initialises the object.
    *

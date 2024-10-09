@@ -9,46 +9,64 @@
  */
 export class Vector {
   /**
-   * The dx-component.
+   * The x-component.
    *
    * @type {number}
    */
-  #dx
+  #x
 
   /**
-   * The dy-component.
+   * The y-component.
    *
    * @type {number}
    */
-  #dy
+  #y
 
   /**
    * Initialises the object.
    *
-   * @param {number} dx - The dx-component.
-   * @param {number} dy - The dy-component.
+   * @param {number} x - The x-component.
+   * @param {number} y - The y-component.
    */
-  constructor (dx, dy) {
-    this.#dx = dx
-    this.#dy = dy
+  constructor (x, y) {
+    this.#x = x
+    this.#y = y
   }
 
   /**
-   * Returns the dx-component.
+   * Returns the x-component.
    *
-   * @returns {number} dx - The dx-component.
+   * @returns {number} x - The x-component.
    */
-  get dx () {
-    return this.#dx
+  get x () {
+    return this.#x
   }
 
   /**
-   * Returns the dy-component.
+   * Sets the x-component.
    *
-   * @returns {number} dy - The dy-component.
+   * @param {number} x - The x-component.
    */
-  get dy () {
-    return this.#dy
+  set x (x) {
+    this.#x = x
+  }
+
+  /**
+   * Returns the y-component.
+   *
+   * @returns {number} y - The y-component.
+   */
+  get y () {
+    return this.#y
+  }
+
+  /**
+   * Sets the y-component.
+   *
+   * @param {number} y - The y-component.
+   */
+  set y (y) {
+    this.#y = y
   }
 
   /**
@@ -57,6 +75,6 @@ export class Vector {
    * @returns {string} A string that represents the current object.
    */
   toString () {
-    return `[${this.#dx}, ${this.#dy}]`
+    return `[${this.#x}, ${this.#y}]`
   }
 }

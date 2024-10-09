@@ -60,8 +60,8 @@ export class PerlinNoise {
     this.#findDotProducts()
 
     // The fade smoothens the interpolations.
-    const fadeX = this.fade(this.#vectors[0].dx)
-    const fadeY = this.fade(this.#vectors[0].dy)
+    const fadeX = this.fade(this.#vectors[0].x)
+    const fadeY = this.fade(this.#vectors[0].y)
 
     // Determine the interpolations on the x-axis.
     const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
@@ -150,7 +150,7 @@ export class PerlinNoise {
    * @returns {number} - The dot product.
    */
   dotProduct (gradient, vector) {
-    return gradient.x * vector.dx + gradient.y * vector.dy
+    return gradient.x * vector.x + gradient.y * vector.y
   }
 
   /**
