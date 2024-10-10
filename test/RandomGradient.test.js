@@ -28,7 +28,7 @@ test('Generate random gradient', () => {
   }
 })
 
-/**
+/*
 test('Generate random values', () => {
   const randomGradient = new RandomGradient(new Point(1, 2))
 

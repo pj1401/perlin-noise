@@ -6,7 +6,7 @@
  */
 
 import { PerlinNoise } from '../src/PerlinNoise.js'
-import { Vector } from '../src/Vector.js'
+// import { Vector } from '../src/Vector.js'
 
 test('Perlin noise values', () => {
   const perlinNoises = [
@@ -22,6 +22,7 @@ test('Perlin noise values', () => {
   }
 })
 
+/*
 test('Dot products', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
 
@@ -60,7 +61,9 @@ test('Dot products', () => {
     expect(perlin.dotProduct(dotPorduct.gradient, dotPorduct.vector)).toBeCloseTo(dotPorduct.expected)
   }
 })
+*/
 
+/*
 test('Fade', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
 
@@ -76,7 +79,9 @@ test('Fade', () => {
     expect(perlin.fade(fadeValue.difference)).toBeCloseTo(fadeValue.expected)
   }
 })
+*/
 
+/*
 test('Interpolation', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
 
@@ -120,3 +125,4 @@ test('Interpolation', () => {
     expect(perlin.interpolate(value.a, value.b, value.fade)).toBeCloseTo(value.expected)
   }
 })
+*/

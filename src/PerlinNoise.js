@@ -29,26 +29,26 @@ export class PerlinNoise extends GridComponent {
   constructor (x, y) {
     super(x, y)
 
-    this.computePerlinNoise()
+    this.#computePerlinNoise()
   }
 
   /**
    * Computes the perlin noise.
    */
-  computePerlinNoise () {
+  #computePerlinNoise () {
     const gridPoints = this.#findGridPoints()
     const randomGradients = this.#createRandomGradients(gridPoints)
     const vectors = this.#computeVectors(gridPoints)
     const dotProducts = this.#computeDotProducts(randomGradients, vectors)
 
     // The fade smoothens the interpolations.
-    const fadeX = this.fade(vectors[0].x)
-    const fadeY = this.fade(vectors[0].y)
+    const fadeX = this.#fade(vectors[0].x)
+    const fadeY = this.#fade(vectors[0].y)
 
     // Determine the interpolations on the x-axis.
     const interpolationsX = this.#interpolateAxis(dotProducts, fadeX)
 
-    this.#perlinValue = this.interpolate(interpolationsX[0], interpolationsX[1], fadeY)
+    this.#perlinValue = this.#interpolate(interpolationsX[0], interpolationsX[1], fadeY)
   }
 
   /**
@@ -111,7 +111,7 @@ export class PerlinNoise extends GridComponent {
   #computeDotProducts (randomGradients, vectors) {
     const dotProducts = []
     for (let i = 0; i < randomGradients.length; i++) {
-      dotProducts.push(this.dotProduct(randomGradients[i], vectors[i]))
+      dotProducts.push(this.#dotProduct(randomGradients[i], vectors[i]))
     }
     return dotProducts
   }
@@ -126,7 +126,7 @@ export class PerlinNoise extends GridComponent {
   #interpolateAxis (dotProducts, fadeValue) {
     const interpolations = []
     for (let i = 0; i <= dotProducts.length / 2; i += 2) {
-      interpolations.push(this.interpolate(dotProducts[i], dotProducts[i + 1], fadeValue))
+      interpolations.push(this.#interpolate(dotProducts[i], dotProducts[i + 1], fadeValue))
     }
     return interpolations
   }
@@ -139,7 +139,7 @@ export class PerlinNoise extends GridComponent {
    * @param {number} fade - The fade value.
    * @returns {number} The interpolation.
    */
-  interpolate (dotProdA, dotProdB, fade) {
+  #interpolate (dotProdA, dotProdB, fade) {
     return dotProdA + fade * (dotProdB - dotProdA)
   }
 
@@ -149,7 +149,7 @@ export class PerlinNoise extends GridComponent {
    * @param {number} difference - The difference between points on the x- or y-axis.
    * @returns {number} The fade value.
    */
-  fade (difference) {
+  #fade (difference) {
     return difference * difference * difference * (difference * (difference * 6 - 15) + 10)
   }
 
@@ -160,7 +160,7 @@ export class PerlinNoise extends GridComponent {
    * @param {Vector} vector - The vector.
    * @returns {number} - The dot product.
    */
-  dotProduct (gradient, vector) {
+  #dotProduct (gradient, vector) {
     return gradient.x * vector.x + gradient.y * vector.y
   }
 
