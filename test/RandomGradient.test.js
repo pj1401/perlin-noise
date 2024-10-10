@@ -1,6 +1,6 @@
 /**
- * @file Tests for the Gradient.js file.
- * @module test/Gradient.test.js
+ * @file Tests for the RandomGradient.js file.
+ * @module test/RandomGradient.test.js
  * @author Patricia Johansson <pj222uc@student.lnu.se>
  * @version 1.0.0
  */
