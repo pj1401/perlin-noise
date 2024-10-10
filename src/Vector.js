@@ -11,6 +11,16 @@ import { GridComponent } from './GridComponent.js'
  */
 export class Vector extends GridComponent {
   /**
+   * Compute the dot product between the current vector and vectorB.
+   *
+   * @param {Vector} vectorB - A different vector.
+   * @returns {number} - The dot product.
+   */
+  dotProduct (vectorB) {
+    return this.x * vectorB.x + this.y * vectorB.y
+  }
+
+  /**
    * Returns a string representing the object.
    *
    * @returns {string} A string that represents the current object.

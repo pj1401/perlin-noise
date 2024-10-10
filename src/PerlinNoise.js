@@ -111,7 +111,7 @@ export class PerlinNoise extends GridComponent {
   #computeDotProducts (randomGradients, vectors) {
     const dotProducts = []
     for (let i = 0; i < randomGradients.length; i++) {
-      dotProducts.push(this.#dotProduct(randomGradients[i], vectors[i]))
+      dotProducts.push(randomGradients[i].dotProduct(vectors[i]))
     }
     return dotProducts
   }
@@ -151,17 +151,6 @@ export class PerlinNoise extends GridComponent {
    */
   #fade (difference) {
     return difference * difference * difference * (difference * (difference * 6 - 15) + 10)
-  }
-
-  /**
-   * Compute the dot product between a gradient and a vector.
-   *
-   * @param {RandomGradient} gradient - The gradient.
-   * @param {Vector} vector - The vector.
-   * @returns {number} - The dot product.
-   */
-  #dotProduct (gradient, vector) {
-    return gradient.x * vector.x + gradient.y * vector.y
   }
 
   /**

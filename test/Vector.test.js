@@ -11,7 +11,7 @@ test('Dot products', () => {
   const testValues = [{
     vectorA: new Vector(-0.7, -0.9),
     vectorB: new Vector(0.3, 0.1),
-    expected: -1.01
+    expected: -0.3
   }, {
     vectorA: new Vector(0.358, 0.799),
     vectorB: new Vector(0.688, 0.616),
