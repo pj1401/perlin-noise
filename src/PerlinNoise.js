@@ -29,11 +29,6 @@ export class PerlinNoise extends GridComponent {
   #vectors
 
   /**
-   * @type {[number]}
-   */
-  #dotProducts = []
-
-  /**
    * The perlin value.
    *
    * @type {number}
@@ -57,19 +52,18 @@ export class PerlinNoise extends GridComponent {
    */
   computePerlinNoise () {
     this.#findGridPoints()
-    this.#findRandomGradients()
-    this.#findVectors()
-    this.#findDotProducts()
+    this.#createRandomGradients()
+    this.#computeVectors()
+    const dotProducts = this.#computeDotProducts()
 
     // The fade smoothens the interpolations.
     const fadeX = this.fade(this.#vectors[0].x)
     const fadeY = this.fade(this.#vectors[0].y)
 
     // Determine the interpolations on the x-axis.
-    const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
-    const interpolationX1 = this.interpolate(this.#dotProducts[2], this.#dotProducts[3], fadeX)
+    const interpolationsX = this.#interpolateAxis(dotProducts, fadeX)
 
-    this.#perlinValue = this.interpolate(interpolationX0, interpolationX1, fadeY)
+    this.#perlinValue = this.interpolate(interpolationsX[0], interpolationsX[1], fadeY)
   }
 
   /**
@@ -89,7 +83,7 @@ export class PerlinNoise extends GridComponent {
   /**
    * Create random gradients for each corner.
    */
-  #findRandomGradients () {
+  #createRandomGradients () {
     this.#randomGradients = []
     for (const corner of Object.values(this.#corners)) {
       this.#randomGradients.push(new RandomGradient(corner))
@@ -99,27 +93,46 @@ export class PerlinNoise extends GridComponent {
   /**
    * Compute the vectors from the corners to (x, y).
    */
-  #findVectors () {
+  #computeVectors () {
     const dx0 = this.x - this.#corners.point00.x
     const dy0 = this.y - this.#corners.point00.y
     const dx1 = this.x - this.#corners.point11.x
     const dy1 = this.y - this.#corners.point11.y
 
-    const vector0 = new Vector(dx0, dy0)
-    const vector1 = new Vector(dx1, dy0)
-    const vector2 = new Vector(dx0, dy1)
-    const vector3 = new Vector(dx1, dy1)
-
-    this.#vectors = [vector0, vector1, vector2, vector3]
+    this.#vectors = [
+      new Vector(dx0, dy0),
+      new Vector(dx1, dy0),
+      new Vector(dx0, dy1),
+      new Vector(dx1, dy1)
+    ]
   }
 
   /**
    * Determine the dot products.
+   *
+   * @returns {[number]} The dot products.
    */
-  #findDotProducts () {
+  #computeDotProducts () {
+    const dotProducts = []
     for (let i = 0; i < this.#randomGradients.length; i++) {
-      this.#dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
+      dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
     }
+    return dotProducts
+  }
+
+  /**
+   * Determine the interpolations on an axis.
+   *
+   * @param {[number]} dotProducts - The dot products.
+   * @param {number} fadeValue - The fade value to soften the interpolations.
+   * @returns {[number]} The interpolated values on the axis.
+   */
+  #interpolateAxis (dotProducts, fadeValue) {
+    const interpolations = []
+    for (let i = 0; i <= dotProducts.length / 2; i += 2) {
+      interpolations.push(this.interpolate(dotProducts[i], dotProducts[i + 1], fadeValue))
+    }
+    return interpolations
   }
 
   /**
