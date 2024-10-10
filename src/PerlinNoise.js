@@ -14,21 +14,6 @@ import { Vector } from './Vector.js'
  */
 export class PerlinNoise extends GridComponent {
   /**
-   * @type {object}
-   */
-  #corners
-
-  /**
-   * @type {[RandomGradient]}
-   */
-  #randomGradients
-
-  /**
-   * @type {[Vector]}
-   */
-  #vectors
-
-  /**
    * The perlin value.
    *
    * @type {number}
@@ -51,14 +36,14 @@ export class PerlinNoise extends GridComponent {
    * Computes the perlin noise.
    */
   computePerlinNoise () {
-    this.#findGridPoints()
-    this.#createRandomGradients()
-    this.#computeVectors()
-    const dotProducts = this.#computeDotProducts()
+    const gridPoints = this.#findGridPoints()
+    const randomGradients = this.#createRandomGradients(gridPoints)
+    const vectors = this.#computeVectors(gridPoints)
+    const dotProducts = this.#computeDotProducts(randomGradients, vectors)
 
     // The fade smoothens the interpolations.
-    const fadeX = this.fade(this.#vectors[0].x)
-    const fadeY = this.fade(this.#vectors[0].y)
+    const fadeX = this.fade(vectors[0].x)
+    const fadeY = this.fade(vectors[0].y)
 
     // Determine the interpolations on the x-axis.
     const interpolationsX = this.#interpolateAxis(dotProducts, fadeX)
@@ -68,11 +53,13 @@ export class PerlinNoise extends GridComponent {
 
   /**
    * Determine the corners.
+   *
+   * @returns {object} The grid points.
    */
   #findGridPoints () {
     const point0 = new Point(Math.floor(this.x), Math.floor(this.y))
 
-    this.#corners = {
+    return {
       point00: point0,
       point10: new Point(point0.x + 1, point0.y),
       point01: new Point(point0.x, point0.y + 1),
@@ -82,24 +69,31 @@ export class PerlinNoise extends GridComponent {
 
   /**
    * Create random gradients for each corner.
+   *
+   * @param {{Point}} corners - The grid points.
+   * @returns {[RandomGradient]} The randomised gradients.
    */
-  #createRandomGradients () {
-    this.#randomGradients = []
-    for (const corner of Object.values(this.#corners)) {
-      this.#randomGradients.push(new RandomGradient(corner))
+  #createRandomGradients (corners) {
+    const randomGradients = []
+    for (const corner of Object.values(corners)) {
+      randomGradients.push(new RandomGradient(corner))
     }
+    return randomGradients
   }
 
   /**
    * Compute the vectors from the corners to (x, y).
+   *
+   * @param {object} corners - The grid points.
+   * @returns {[Vector]} The vectors.
    */
-  #computeVectors () {
-    const dx0 = this.x - this.#corners.point00.x
-    const dy0 = this.y - this.#corners.point00.y
-    const dx1 = this.x - this.#corners.point11.x
-    const dy1 = this.y - this.#corners.point11.y
+  #computeVectors (corners) {
+    const dx0 = this.x - corners.point00.x
+    const dy0 = this.y - corners.point00.y
+    const dx1 = this.x - corners.point11.x
+    const dy1 = this.y - corners.point11.y
 
-    this.#vectors = [
+    return [
       new Vector(dx0, dy0),
       new Vector(dx1, dy0),
       new Vector(dx0, dy1),
@@ -110,12 +104,14 @@ export class PerlinNoise extends GridComponent {
   /**
    * Determine the dot products.
    *
+   * @param {[RandomGradient]} randomGradients - The randomised gradients.
+   * @param {[Vector]} vectors - The vectors.
    * @returns {[number]} The dot products.
    */
-  #computeDotProducts () {
+  #computeDotProducts (randomGradients, vectors) {
     const dotProducts = []
-    for (let i = 0; i < this.#randomGradients.length; i++) {
-      dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
+    for (let i = 0; i < randomGradients.length; i++) {
+      dotProducts.push(this.dotProduct(randomGradients[i], vectors[i]))
     }
     return dotProducts
   }
@@ -158,7 +154,7 @@ export class PerlinNoise extends GridComponent {
   }
 
   /**
-   * Compute the dot product between the gradient and the vector.
+   * Compute the dot product between a gradient and a vector.
    *
    * @param {RandomGradient} gradient - The gradient.
    * @param {Vector} vector - The vector.
