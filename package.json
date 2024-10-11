@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "A module that implements perlin noise.",
   "type": "module",
-  "main": "src/app.js",
+  "main": "src/PerlinNoise.js",
   "scripts": {
-    "start": "node src/app.js",
     "lint": "npx eslint ./src || exit 0",
     "lint:fix": "npx eslint ./src --fix || exit 0",
     "test": "npx --node-options=--experimental-vm-modules jest || exit 0"
