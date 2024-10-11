@@ -4,6 +4,7 @@
  * @version 1.0.0
  */
 
+import { GridComponent } from './GridComponent.js'
 import { Point } from './Point.js'
 import { RandomGradient } from './RandomGradient.js'
 import { Vector } from './Vector.js'
@@ -11,30 +12,12 @@ import { Vector } from './Vector.js'
 /**
  * Represents 2D perlin noise.
  */
-export class PerlinNoise {
-  #x
-  #y
-
+export class PerlinNoise extends GridComponent {
   /**
-   * @type {object}
+   * The perlin value.
+   *
+   * @type {number}
    */
-  #corners
-
-  /**
-   * @type {[RandomGradient]}
-   */
-  #randomGradients
-
-  /**
-   * @type {[Vector]}
-   */
-  #vectors
-
-  /**
-   * @type {[number]}
-   */
-  #dotProducts = []
-
   #perlinValue
 
   /**
@@ -44,39 +27,39 @@ export class PerlinNoise {
    * @param {number} y - The y-coordinate.
    */
   constructor (x, y) {
-    this.#x = x
-    this.#y = y
+    super(x, y)
 
-    this.computePerlinNoise()
+    this.#computePerlinNoise()
   }
 
   /**
    * Computes the perlin noise.
    */
-  computePerlinNoise () {
-    this.findGridPoints()
-    this.findRandomGradients()
-    this.findVectors()
-    this.findDotProducts()
+  #computePerlinNoise () {
+    const gridPoints = this.#findGridPoints()
+    const randomGradients = this.#createRandomGradients(gridPoints)
+    const vectors = this.#computeVectors(gridPoints)
+    const dotProducts = this.#computeDotProducts(randomGradients, vectors)
 
     // The fade smoothens the interpolations.
-    const fadeX = this.fade(this.#vectors[0].dx)
-    const fadeY = this.fade(this.#vectors[0].dy)
+    const fadeX = this.#fade(vectors[0].x)
+    const fadeY = this.#fade(vectors[0].y)
 
     // Determine the interpolations on the x-axis.
-    const interpolationX0 = this.interpolate(this.#dotProducts[0], this.#dotProducts[1], fadeX)
-    const interpolationX1 = this.interpolate(this.#dotProducts[2], this.#dotProducts[3], fadeX)
+    const interpolationsX = this.#interpolateAxis(dotProducts, fadeX)
 
-    this.#perlinValue = this.interpolate(interpolationX0, interpolationX1, fadeY)
+    this.#perlinValue = this.#interpolate(interpolationsX[0], interpolationsX[1], fadeY)
   }
 
   /**
    * Determine the corners.
+   *
+   * @returns {object} The grid points.
    */
-  findGridPoints () {
-    const point0 = new Point(Math.floor(this.#x), Math.floor(this.#y))
+  #findGridPoints () {
+    const point0 = new Point(Math.floor(this.x), Math.floor(this.y))
 
-    this.#corners = {
+    return {
       point00: point0,
       point10: new Point(point0.x + 1, point0.y),
       point01: new Point(point0.x, point0.y + 1),
@@ -86,38 +69,66 @@ export class PerlinNoise {
 
   /**
    * Create random gradients for each corner.
+   *
+   * @param {{Point}} corners - The grid points.
+   * @returns {[RandomGradient]} The randomised gradients.
    */
-  findRandomGradients () {
-    this.#randomGradients = []
-    for (const corner of Object.values(this.#corners)) {
-      this.#randomGradients.push(new RandomGradient(corner))
+  #createRandomGradients (corners) {
+    const randomGradients = []
+    for (const corner of Object.values(corners)) {
+      randomGradients.push(new RandomGradient(corner))
     }
+    return randomGradients
   }
 
   /**
    * Compute the vectors from the corners to (x, y).
+   *
+   * @param {object} corners - The grid points.
+   * @returns {[Vector]} The vectors.
    */
-  findVectors () {
-    const dx0 = this.#x - this.#corners.point00.x
-    const dy0 = this.#y - this.#corners.point00.y
-    const dx1 = this.#x - this.#corners.point11.x
-    const dy1 = this.#y - this.#corners.point11.y
+  #computeVectors (corners) {
+    const dx0 = this.x - corners.point00.x
+    const dy0 = this.y - corners.point00.y
+    const dx1 = this.x - corners.point11.x
+    const dy1 = this.y - corners.point11.y
 
-    const vector0 = new Vector(dx0, dy0)
-    const vector1 = new Vector(dx1, dy0)
-    const vector2 = new Vector(dx0, dy1)
-    const vector3 = new Vector(dx1, dy1)
-
-    this.#vectors = [vector0, vector1, vector2, vector3]
+    return [
+      new Vector(dx0, dy0),
+      new Vector(dx1, dy0),
+      new Vector(dx0, dy1),
+      new Vector(dx1, dy1)
+    ]
   }
 
   /**
    * Determine the dot products.
+   *
+   * @param {[RandomGradient]} randomGradients - The randomised gradients.
+   * @param {[Vector]} vectors - The vectors.
+   * @returns {[number]} The dot products.
    */
-  findDotProducts () {
-    for (let i = 0; i < this.#randomGradients.length; i++) {
-      this.#dotProducts.push(this.dotProduct(this.#randomGradients[i], this.#vectors[i]))
+  #computeDotProducts (randomGradients, vectors) {
+    const dotProducts = []
+    for (let i = 0; i < randomGradients.length; i++) {
+      dotProducts.push(randomGradients[i].dotProduct(vectors[i]))
     }
+    return dotProducts
+  }
+
+  /**
+   * Determine the interpolations on an axis.
+   *
+   * @param {[number]} dotProducts - The dot products.
+   * @param {number} fadeValue - The fade value to soften the interpolations.
+   * @returns {[number]} The interpolated values on the axis.
+   */
+  #interpolateAxis (dotProducts, fadeValue) {
+    const interpolations = []
+    for (let i = 0; i <= dotProducts.length / 2; i += 2) {
+      interpolations.push(this.#interpolate(dotProducts[i], dotProducts[i + 1], fadeValue))
+    }
+    return interpolations
   }
 
   /**
@@ -128,7 +139,7 @@ export class PerlinNoise {
    * @param {number} fade - The fade value.
    * @returns {number} The interpolation.
    */
-  interpolate (dotProdA, dotProdB, fade) {
+  #interpolate (dotProdA, dotProdB, fade) {
     return dotProdA + fade * (dotProdB - dotProdA)
   }
 
@@ -138,19 +149,8 @@ export class PerlinNoise {
    * @param {number} difference - The difference between points on the x- or y-axis.
    * @returns {number} The fade value.
    */
-  fade (difference) {
+  #fade (difference) {
     return difference * difference * difference * (difference * (difference * 6 - 15) + 10)
-  }
-
-  /**
-   * Compute the dot product between the gradient and the vector.
-   *
-   * @param {RandomGradient} gradient - The gradient.
-   * @param {Vector} vector - The vector.
-   * @returns {number} - The dot product.
-   */
-  dotProduct (gradient, vector) {
-    return gradient.x * vector.dx + gradient.y * vector.dy
   }
 
   /**

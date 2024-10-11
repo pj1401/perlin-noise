@@ -4,51 +4,20 @@
  * @version 1.0.0
  */
 
+import { GridComponent } from './GridComponent.js'
+
 /**
  * Represents a vector.
  */
-export class Vector {
+export class Vector extends GridComponent {
   /**
-   * The dx-component.
+   * Compute the dot product between the current vector and vectorB.
    *
-   * @type {number}
+   * @param {Vector} vectorB - A different vector.
+   * @returns {number} - The dot product.
    */
-  #dx
-
-  /**
-   * The dy-component.
-   *
-   * @type {number}
-   */
-  #dy
-
-  /**
-   * Initialises the object.
-   *
-   * @param {number} dx - The dx-component.
-   * @param {number} dy - The dy-component.
-   */
-  constructor (dx, dy) {
-    this.#dx = dx
-    this.#dy = dy
-  }
-
-  /**
-   * Returns the dx-component.
-   *
-   * @returns {number} dx - The dx-component.
-   */
-  get dx () {
-    return this.#dx
-  }
-
-  /**
-   * Returns the dy-component.
-   *
-   * @returns {number} dy - The dy-component.
-   */
-  get dy () {
-    return this.#dy
+  dotProduct (vectorB) {
+    return this.x * vectorB.x + this.y * vectorB.y
   }
 
   /**
@@ -57,6 +26,6 @@ export class Vector {
    * @returns {string} A string that represents the current object.
    */
   toString () {
-    return `[${this.#dx}, ${this.#dy}]`
+    return `V[${this.x}, ${this.y}]`
   }
 }

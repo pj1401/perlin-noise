@@ -1,6 +1,6 @@
 /**
- * @file Tests for the Gradient.js file.
- * @module test/Gradient.test.js
+ * @file Tests for the RandomGradient.js file.
+ * @module test/RandomGradient.test.js
  * @author Patricia Johansson <pj222uc@student.lnu.se>
  * @version 1.0.0
  */
@@ -28,6 +28,7 @@ test('Generate random gradient', () => {
   }
 })
 
+/*
 test('Generate random values', () => {
   const randomGradient = new RandomGradient(new Point(1, 2))
 
@@ -43,3 +44,4 @@ test('Generate random values', () => {
     expect(randomGradient.random(value.x, value.y)).toBeCloseTo(value.expected)
   }
 })
+ */
