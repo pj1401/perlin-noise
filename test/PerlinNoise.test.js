@@ -21,6 +21,29 @@ test('Perlin noise values', () => {
   }
 })
 
+test('Changing coordinates', () => {
+  const perlin = new PerlinNoise(1.3, 2.1)
+  expect(perlin.valueOf()).toBeCloseTo(0.093744)
+
+  perlin.x = 3.5
+
+  expect(perlin.valueOf()).toBeCloseTo(0.22739)
+})
+
+test('NaN in coordinates', () => {
+  expect(() => new PerlinNoise(NaN, 2)).toThrow(TypeError)
+})
+
+test('Non number in coordinates', () => {
+  expect(() => new PerlinNoise(1, 'number')).toThrow(TypeError)
+  expect(() => new PerlinNoise('4', 3)).toThrow(TypeError)
+})
+
+test('Changing coordinates to non number', () => {
+  const perlin = new PerlinNoise(1, 2)
+  expect(() => { perlin.x = '1' }).toThrow(TypeError)
+})
+
 /*
 test('Fade', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
