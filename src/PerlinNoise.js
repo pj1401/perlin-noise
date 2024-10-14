@@ -4,7 +4,6 @@
  * @version 1.0.0
  */
 
-import { GridComponent } from './GridComponent.js'
 import { Point } from './Point.js'
 import { RandomGradient } from './RandomGradient.js'
 import { Vector } from './Vector.js'
@@ -12,7 +11,7 @@ import { Vector } from './Vector.js'
 /**
  * Represents 2D perlin noise.
  */
-export class PerlinNoise extends GridComponent {
+export class PerlinNoise {
   /**
    * The perlin value.
    *
@@ -27,18 +26,36 @@ export class PerlinNoise extends GridComponent {
    * @param {number} y - The y-coordinate.
    */
   constructor (x, y) {
-    super(x, y)
+    this.#checkIfNumber(x)
+    this.#checkIfNumber(y)
+    this.#computePerlinNoise(x, y)
+  }
 
-    this.#computePerlinNoise()
+  /**
+   * Returns the noise based on the coordinates.
+   *
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
+   * @returns {number} The perlin noise.
+   */
+  perlin (x, y) {
+    this.#checkIfNumber(x)
+    this.#checkIfNumber(y)
+    this.#computePerlinNoise(x, y)
+
+    return this.#perlinValue
   }
 
   /**
    * Computes the perlin noise.
+   *
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
    */
-  #computePerlinNoise () {
-    const gridPoints = this.#findGridPoints()
+  #computePerlinNoise (x, y) {
+    const gridPoints = this.#findGridPoints(x, y)
     const randomGradients = this.#createRandomGradients(gridPoints)
-    const vectors = this.#computeVectors(gridPoints)
+    const vectors = this.#computeVectors(gridPoints, x, y)
     const dotProducts = this.#computeDotProducts(randomGradients, vectors)
 
     // The fade smoothens the interpolations.
@@ -54,10 +71,12 @@ export class PerlinNoise extends GridComponent {
   /**
    * Determine the corners.
    *
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
    * @returns {object} The grid points.
    */
-  #findGridPoints () {
-    const point0 = new Point(Math.floor(this.x), Math.floor(this.y))
+  #findGridPoints (x, y) {
+    const point0 = new Point(Math.floor(x), Math.floor(y))
 
     return {
       point00: point0,
@@ -85,13 +104,15 @@ export class PerlinNoise extends GridComponent {
    * Compute the vectors from the corners to (x, y).
    *
    * @param {object} corners - The grid points.
+   * @param {number} x - The x-coordinate.
+   * @param {number} y - The y-coordinate.
    * @returns {[Vector]} The vectors.
    */
-  #computeVectors (corners) {
-    const dx0 = this.x - corners.point00.x
-    const dy0 = this.y - corners.point00.y
-    const dx1 = this.x - corners.point11.x
-    const dy1 = this.y - corners.point11.y
+  #computeVectors (corners, x, y) {
+    const dx0 = x - corners.point00.x
+    const dy0 = y - corners.point00.y
+    const dx1 = x - corners.point11.x
+    const dy1 = y - corners.point11.y
 
     return [
       new Vector(dx0, dy0),
@@ -154,11 +175,23 @@ export class PerlinNoise extends GridComponent {
   }
 
   /**
-   * Returns the primitive value of the specified object.
+   * Returns the current perlin noise value.
    *
-   * @returns {number} The primitive value of the specified object.
+   * @returns {number} The perlin noise value.
    */
   valueOf () {
     return this.#perlinValue
+  }
+
+  /**
+   * Determines whether or not the passed argument is a number.
+   *
+   * @param {object} value - The value to be tested.
+   * @throws {TypeError} The passed argument is not a number.
+   */
+  #checkIfNumber (value) {
+    if (Number.isNaN(value) || typeof value !== 'number') {
+      throw new TypeError('The passed argument is not a number.')
+    }
   }
 }
