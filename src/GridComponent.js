@@ -4,6 +4,8 @@
  * @version 1.0.0
  */
 
+import { checkIfNumber } from './errorHandlers.js'
+
 /**
  * Represents a component on a grid.
  */
@@ -51,7 +53,7 @@ export class GridComponent {
    * @param {number} x - The x-component.
    */
   set x (x) {
-    this.#checkIfNumber(x)
+    checkIfNumber(x)
     this.#x = x
   }
 
@@ -70,19 +72,7 @@ export class GridComponent {
    * @param {number} y - The y-component.
    */
   set y (y) {
-    this.#checkIfNumber(y)
+    checkIfNumber(y)
     this.#y = y
-  }
-
-  /**
-   * Determines whether or not the passed argument is a number.
-   *
-   * @param {object} value - The value to be tested.
-   * @throws {TypeError} The passed argument is not a number.
-   */
-  #checkIfNumber (value) {
-    if (Number.isNaN(value) || typeof value !== 'number') {
-      throw new TypeError('The passed argument is not a number.')
-    }
   }
 }

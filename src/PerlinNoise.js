@@ -4,6 +4,7 @@
  * @version 1.0.0
  */
 
+import { checkIfNumber } from './errorHandlers.js'
 import { Point } from './Point.js'
 import { RandomGradient } from './RandomGradient.js'
 import { Vector } from './Vector.js'
@@ -26,8 +27,8 @@ export class PerlinNoise {
    * @param {number} y - The y-coordinate.
    */
   constructor (x, y) {
-    this.#checkIfNumber(x)
-    this.#checkIfNumber(y)
+    checkIfNumber(x)
+    checkIfNumber(y)
     this.#computePerlinNoise(x, y)
   }
 
@@ -39,8 +40,8 @@ export class PerlinNoise {
    * @returns {number} The perlin noise.
    */
   perlin (x, y) {
-    this.#checkIfNumber(x)
-    this.#checkIfNumber(y)
+    checkIfNumber(x)
+    checkIfNumber(y)
     this.#computePerlinNoise(x, y)
 
     return this.#perlinValue
@@ -181,17 +182,5 @@ export class PerlinNoise {
    */
   valueOf () {
     return this.#perlinValue
-  }
-
-  /**
-   * Determines whether or not the passed argument is a number.
-   *
-   * @param {object} value - The value to be tested.
-   * @throws {TypeError} The passed argument is not a number.
-   */
-  #checkIfNumber (value) {
-    if (Number.isNaN(value) || typeof value !== 'number') {
-      throw new TypeError('The passed argument is not a number.')
-    }
   }
 }
