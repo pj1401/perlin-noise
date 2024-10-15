@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "A module that implements perlin noise.",
   "type": "module",
-  "main": "src/PerlinNoise.js",
+  "main": "index.js",
   "scripts": {
-    "lint": "npx eslint ./src || exit 0",
-    "lint:fix": "npx eslint ./src --fix || exit 0",
+    "lint": "npx eslint index.js ./src || exit 0",
+    "lint:fix": "npx eslint index.js ./src --fix || exit 0",
     "test": "npx --node-options=--experimental-vm-modules jest || exit 0"
   },
   "author": "Patricia Johansson <pj222uc@student.lnu.se>",
