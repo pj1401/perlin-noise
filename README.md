@@ -4,10 +4,12 @@ A module for implementing 2D perlin noise.
 
 ## Installation
 
+Download the latest release and extract the files.
+
 To import:
 
 ```javascript
-import { PerlinNoise } from './PerlinNoise.js'
+import PerlinNoise from './{PATH}/perlin-noise/index.js'
 ```
 
 ## Usage

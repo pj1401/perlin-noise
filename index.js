@@ -4,15 +4,15 @@
  * @version 1.0.0
  */
 
-import { checkIfNumber } from './errorHandlers.js'
-import { Point } from './Point.js'
-import { RandomGradient } from './RandomGradient.js'
-import { Vector } from './Vector.js'
+import { checkIfNumber } from './src/errorHandlers.js'
+import { Point } from './src/Point.js'
+import { RandomGradient } from './src/RandomGradient.js'
+import { Vector } from './src/Vector.js'
 
 /**
  * Represents 2D perlin noise.
  */
-export class PerlinNoise {
+export default class PerlinNoise {
   /**
    * The perlin value.
    *

@@ -1,11 +1,11 @@
 /**
- * @file Tests for the PerlinNoise.js file.
+ * @file Tests for the PerlinNoise class.
  * @module test/PerlinNoise.test.js
  * @author Patricia Johansson <pj222uc@student.lnu.se>
  * @version 1.0.0
  */
 
-import { PerlinNoise } from '../src/PerlinNoise.js'
+import PerlinNoise from '../index.js'
 
 test('Perlin noise values', () => {
   const perlinNoises = [
