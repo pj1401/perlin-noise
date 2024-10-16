@@ -2,7 +2,7 @@
  * @file Tests for the PerlinNoise class.
  * @module test/PerlinNoise.test.js
  * @author Patricia Johansson <pj222uc@student.lnu.se>
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import PerlinNoise from '../index.js'
@@ -85,6 +85,12 @@ test('Changing coordinates to non number', () => {
   expect(() => { perlin.perlin('1.3', 2.1) }).toThrow(TypeError)
 
   expect(perlin.valueOf()).toBeCloseTo(0.093744)
+})
+
+test('Setting seed to non number', () => {
+  expect(() => new PerlinNoise(1.3, 2.1, '4783')).toThrow(TypeError)
+  expect(() => new PerlinNoise(1.3, 2.1, 'number')).toThrow(TypeError)
+  expect(() => new PerlinNoise(1.3, 2.1, NaN)).toThrow(TypeError)
 })
 
 /*

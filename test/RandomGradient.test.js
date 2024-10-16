@@ -2,7 +2,7 @@
  * @file Tests for the RandomGradient.js file.
  * @module test/RandomGradient.test.js
  * @author Patricia Johansson <pj222uc@student.lnu.se>
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import { Point } from '../src/Point.js'
@@ -26,6 +26,42 @@ test('Generate random gradient', () => {
     expect(randomGradient.gradient.x).toBeCloseTo(randomGradient.expected.x)
     expect(randomGradient.gradient.y).toBeCloseTo(randomGradient.expected.y)
   }
+})
+
+test('Randomise gradient using a seed', () => {
+  const randomGradients = [
+    { gradient: new RandomGradient(new Point(0, 0), 1), expected: { x: 0.332503, y: 0.943102 } },
+    { gradient: new RandomGradient(new Point(0, 0), 337837103), expected: { x: 0.976169, y: -0.21701 } },
+    { gradient: new RandomGradient(new Point(1, 2), 1), expected: { x: -0.8898, y: -0.456349 } },
+    { gradient: new RandomGradient(new Point(1, 2), 337837103), expected: { x: 0.412568, y: -0.910927 } },
+    { gradient: new RandomGradient(new Point(2, 2), 1), expected: { x: -0.399695, y: -0.916648 } },
+    { gradient: new RandomGradient(new Point(2, 2), 337837103), expected: { x: 0.768991, y: 0.63926 } },
+    { gradient: new RandomGradient(new Point(1, 3), 1), expected: { x: -0.681893, y: 0.731452 } },
+    { gradient: new RandomGradient(new Point(1, 3), 337837103), expected: { x: -0.553916, y: -0.832572 } },
+    { gradient: new RandomGradient(new Point(2, 3), 1), expected: { x: 0.095355, y: 0.995443 } },
+    { gradient: new RandomGradient(new Point(2, 3), 337837103), expected: { x: 0.927418, y: -0.374026 } },
+    { gradient: new RandomGradient(new Point(6, 4), 1), expected: { x: -0.636747, y: -0.771073 } },
+    { gradient: new RandomGradient(new Point(6, 4), 337837103), expected: { x: -0.999511, y: -0.031285 } },
+    { gradient: new RandomGradient(new Point(10, 20), 1), expected: { x: -0.330403, y: -0.94384 } },
+    { gradient: new RandomGradient(new Point(10, 20), 337837103), expected: { x: 0.531923, y: 0.846793 } },
+    { gradient: new RandomGradient(new Point(11, 21), 1), expected: { x: -0.450734, y: 0.892658 } },
+    { gradient: new RandomGradient(new Point(11, 21), 337837103), expected: { x: 0.845248, y: -0.534374 } },
+    { gradient: new RandomGradient(new Point(100, 200), 1), expected: { x: -0.006231, y: 0.999981 } },
+    { gradient: new RandomGradient(new Point(100, 200), 337837103), expected: { x: 0.604265, y: 0.796783 } },
+    { gradient: new RandomGradient(new Point(101, 201), 1), expected: { x: 0.502014, y: -0.864859 } },
+    { gradient: new RandomGradient(new Point(101, 201), 337837103), expected: { x: -0.990532, y: -0.137282 } }
+  ]
+
+  for (const randomGradient of randomGradients) {
+    expect(randomGradient.gradient.x).toBeCloseTo(randomGradient.expected.x)
+    expect(randomGradient.gradient.y).toBeCloseTo(randomGradient.expected.y)
+  }
+})
+
+test('Setting seed to non number', () => {
+  expect(() => new RandomGradient(new Point(0, 0), '1')).toThrow(TypeError)
+  expect(() => new RandomGradient(new Point(0, 0), 'number')).toThrow(TypeError)
+  expect(() => new RandomGradient(new Point(0, 0), NaN)).toThrow(TypeError)
 })
 
 /*
