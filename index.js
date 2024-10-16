@@ -1,7 +1,7 @@
 /**
  * @file The PerlinNoise class.
  * @author Patricia Johansson <pj222uc@student.lnu.se>
- * @version 1.0.0
+ * @version 1.1.0
  */
 
 import { checkIfNumber } from './src/errorHandlers.js'
@@ -21,14 +21,25 @@ export default class PerlinNoise {
   #perlinValue
 
   /**
+   * A seed that is used to randomise the gradients.
+   *
+   * @type {number}
+   */
+  #seed
+
+  /**
    * Initialises the object.
    *
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
+   * @param {number} [seed=0] - Optional seed used to randomise.
    */
-  constructor (x, y) {
+  constructor (x, y, seed = 0) {
     checkIfNumber(x)
     checkIfNumber(y)
+    checkIfNumber(seed)
+
+    this.#seed = seed
     this.#computePerlinNoise(x, y)
   }
 
@@ -96,7 +107,7 @@ export default class PerlinNoise {
   #createRandomGradients (corners) {
     const randomGradients = []
     for (const corner of Object.values(corners)) {
-      randomGradients.push(new RandomGradient(corner))
+      randomGradients.push(new RandomGradient(corner, this.#seed))
     }
     return randomGradients
   }

@@ -1,9 +1,10 @@
 /**
  * @file The RandomGradient class.
  * @author Patricia Johansson <pj222uc@student.lnu.se>
- * @version 1.0.0
+ * @version 1.1.0
  */
 
+import { checkIfNumber } from './errorHandlers.js'
 import { Point } from './Point.js'
 import { Vector } from './Vector.js'
 
@@ -15,11 +16,13 @@ export class RandomGradient extends Vector {
    * Initialises the object.
    *
    * @param {Point} point - The point on the grid.
+   * @param {number} [seed=0] - Optional seed used to randomise.
    */
-  constructor (point) {
+  constructor (point, seed = 0) {
     super(point.x, point.y)
+    checkIfNumber(seed)
 
-    this.#randomiseGradient(point.x, point.y)
+    this.#randomiseGradient(point.x, point.y, seed)
   }
 
   /**
@@ -27,9 +30,10 @@ export class RandomGradient extends Vector {
    *
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
+   * @param {number} seed - Optional seed used to randomise.
    */
-  #randomiseGradient (x, y) {
-    const angle = this.#random(x, y) * 2 * Math.PI
+  #randomiseGradient (x, y, seed) {
+    const angle = this.#random(x, y, seed) * 2 * Math.PI
 
     this.x = Math.cos(angle)
     this.y = Math.sin(angle)
@@ -40,15 +44,16 @@ export class RandomGradient extends Vector {
    *
    * @param {number} x - The x-coordinate.
    * @param {number} y - The y-coordinate.
+   * @param {number} seed - Optional seed used to randomise.
    * @returns {number} A value between 0 and 1.
    */
-  #random (x, y) {
+  #random (x, y, seed) {
     // Prime numbers are used to combine x and y.
-    let seed = x * 374761393 + y * 668265263
-    seed = (seed ^ (seed >> 13)) * 1274126177
-    seed = (seed ^ (seed >> 16))
+    let finalSeed = x * 374761393 + y * 668265263 + seed * 961748941
+    finalSeed = (finalSeed ^ (finalSeed >> 13)) * 1274126177
+    finalSeed = (finalSeed ^ (finalSeed >> 16))
 
     // Convert to a value between 0 and 1.
-    return (seed & 0x7fffffff) / 0x7fffffff
+    return (finalSeed & 0x7fffffff) / 0x7fffffff
   }
 }
