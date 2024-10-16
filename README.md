@@ -33,3 +33,11 @@ perlin.perlin(0.5, 0.5) // returns 0.006776
 
 perlin.valueOf() // returns 0.006776
 ```
+
+It's possible to specify a seed when instantiating the object. The same noise is generated given the same seed.
+
+```javascript
+const perlin = new PerlinNoise(0.5, 0.5, 24815821)
+
+perlin.valueOf() // returns -0.344707
+```
