@@ -13,7 +13,17 @@ test('Perlin noise values', () => {
     { perlin: new PerlinNoise(5.5, 3.7), expected: -0.177968 },
     { perlin: new PerlinNoise(10.0, 20.0), expected: 0 },
     { perlin: new PerlinNoise(100.0, 200.0), expected: 0 },
-    { perlin: new PerlinNoise(0.5, 0.5), expected: 0.006776 }
+    { perlin: new PerlinNoise(0, 0.5), expected: -0.056895 },
+    { perlin: new PerlinNoise(0.1, 0.5), expected: -0.05546 },
+    { perlin: new PerlinNoise(0.2, 0.5), expected: -0.051994 },
+    { perlin: new PerlinNoise(0.3, 0.5), expected: -0.042475 },
+    { perlin: new PerlinNoise(0.4, 0.5), expected: -0.023314 },
+    { perlin: new PerlinNoise(0.5, 0.5), expected: 0.006776 },
+    { perlin: new PerlinNoise(0.5, 0.6), expected: -0.00591 },
+    { perlin: new PerlinNoise(0.5, 0.7), expected: -0.028887 },
+    { perlin: new PerlinNoise(0.5, 0.8), expected: -0.059371 },
+    { perlin: new PerlinNoise(0.5, 0.9), expected: -0.092953 },
+    { perlin: new PerlinNoise(0.5, 1), expected: -0.126147 }
   ]
 
   for (const perlinNoise of perlinNoises) {
@@ -28,6 +38,35 @@ test('Changing coordinates', () => {
   perlin.perlin(3.5, 2.1)
 
   expect(perlin.valueOf()).toBeCloseTo(0.22739)
+})
+
+test('Using a seed', () => {
+  const perlinNoises = [
+    { perlin: new PerlinNoise(1.3, 2.1, 4783), expected: 0.028378 },
+    { perlin: new PerlinNoise(5.5, 3.7, 4783), expected: -0.223627 },
+    { perlin: new PerlinNoise(10, 20, 4783), expected: 0 },
+    { perlin: new PerlinNoise(1.3, 2.1, 6829), expected: 0.206701 },
+    { perlin: new PerlinNoise(5.5, 3.7, 6829), expected: 0.169030 },
+    { perlin: new PerlinNoise(10, 20, 6829), expected: 0 },
+    { perlin: new PerlinNoise(1.3, 2.1, 7001), expected: -0.166117 },
+    { perlin: new PerlinNoise(5.5, 3.7, 7001), expected: 0.183346 },
+    { perlin: new PerlinNoise(10, 20, 7001), expected: 0 },
+    { perlin: new PerlinNoise(0, 0.5, 24815821), expected: -0.3184 },
+    { perlin: new PerlinNoise(0.1, 0.5, 24815821), expected: -0.391194 },
+    { perlin: new PerlinNoise(0.2, 0.5, 24815821), expected: -0.442847 },
+    { perlin: new PerlinNoise(0.3, 0.5, 24815821), expected: -0.45581 },
+    { perlin: new PerlinNoise(0.4, 0.5, 24815821), expected: -0.421792 },
+    { perlin: new PerlinNoise(0.5, 0.5, 24815821), expected: -0.344707 },
+    { perlin: new PerlinNoise(0.5, 0.6, 24815821), expected: -0.350501 },
+    { perlin: new PerlinNoise(0.5, 0.7, 24815821), expected: -0.325892 },
+    { perlin: new PerlinNoise(0.5, 0.8, 24815821), expected: -0.272131 },
+    { perlin: new PerlinNoise(0.5, 0.9, 24815821), expected: -0.197691 },
+    { perlin: new PerlinNoise(0.5, 1, 24815821), expected: -0.114196 }
+  ]
+
+  for (const perlinNoise of perlinNoises) {
+    expect(perlinNoise.perlin.valueOf()).toBeCloseTo(perlinNoise.expected)
+  }
 })
 
 test('NaN in coordinates', () => {
