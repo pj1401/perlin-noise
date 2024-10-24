@@ -30,17 +30,13 @@ export default class PerlinNoise {
   /**
    * Initialises the object.
    *
-   * @param {number} x - The x-coordinate.
-   * @param {number} y - The y-coordinate.
    * @param {number} [seed=0] - Optional seed used to randomise.
    */
-  constructor (x, y, seed = 0) {
-    checkIfNumber(x)
-    checkIfNumber(y)
+  constructor (seed = 0) {
     checkIfNumber(seed)
 
     this.#seed = seed
-    this.#computePerlinNoise(x, y)
+    this.#computePerlinNoise(0, 0)
   }
 
   /**

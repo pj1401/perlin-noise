@@ -8,26 +8,27 @@
 import PerlinNoise from '../index.js'
 
 test('Perlin noise values', () => {
+  const perlin = new PerlinNoise()
   const perlinNoises = [
-    { perlin: new PerlinNoise(1.3, 2.1), expected: 0.093744 },
-    { perlin: new PerlinNoise(5.5, 3.7), expected: -0.177968 },
-    { perlin: new PerlinNoise(10.0, 20.0), expected: 0 },
-    { perlin: new PerlinNoise(100.0, 200.0), expected: 0 },
-    { perlin: new PerlinNoise(0, 0.5), expected: -0.056895 },
-    { perlin: new PerlinNoise(0.1, 0.5), expected: -0.05546 },
-    { perlin: new PerlinNoise(0.2, 0.5), expected: -0.051994 },
-    { perlin: new PerlinNoise(0.3, 0.5), expected: -0.042475 },
-    { perlin: new PerlinNoise(0.4, 0.5), expected: -0.023314 },
-    { perlin: new PerlinNoise(0.5, 0.5), expected: 0.006776 },
-    { perlin: new PerlinNoise(0.5, 0.6), expected: -0.00591 },
-    { perlin: new PerlinNoise(0.5, 0.7), expected: -0.028887 },
-    { perlin: new PerlinNoise(0.5, 0.8), expected: -0.059371 },
-    { perlin: new PerlinNoise(0.5, 0.9), expected: -0.092953 },
-    { perlin: new PerlinNoise(0.5, 1), expected: -0.126147 }
+    { generatedValue: perlin.generatePerlinNoise(1.3, 2.1), expected: 0.093744 },
+    { generatedValue: perlin.generatePerlinNoise(5.5, 3.7), expected: -0.177968 },
+    { generatedValue: perlin.generatePerlinNoise(10.0, 20.0), expected: 0 },
+    { generatedValue: perlin.generatePerlinNoise(100.0, 200.0), expected: 0 },
+    { generatedValue: perlin.generatePerlinNoise(0, 0.5), expected: -0.056895 },
+    { generatedValue: perlin.generatePerlinNoise(0.1, 0.5), expected: -0.05546 },
+    { generatedValue: perlin.generatePerlinNoise(0.2, 0.5), expected: -0.051994 },
+    { generatedValue: perlin.generatePerlinNoise(0.3, 0.5), expected: -0.042475 },
+    { generatedValue: perlin.generatePerlinNoise(0.4, 0.5), expected: -0.023314 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 0.5), expected: 0.006776 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 0.6), expected: -0.00591 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 0.7), expected: -0.028887 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 0.8), expected: -0.059371 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 0.9), expected: -0.092953 },
+    { generatedValue: perlin.generatePerlinNoise(0.5, 1), expected: -0.126147 }
   ]
 
   for (const perlinNoise of perlinNoises) {
-    expect(perlinNoise.perlin.valueOf()).toBeCloseTo(perlinNoise.expected)
+    expect(perlinNoise.generatedValue).toBeCloseTo(perlinNoise.expected)
   }
 })
 
