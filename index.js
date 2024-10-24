@@ -50,7 +50,7 @@ export default class PerlinNoise {
    * @param {number} y - The y-coordinate.
    * @returns {number} The perlin noise.
    */
-  perlin (x, y) {
+  generatePerlinNoise (x, y) {
     checkIfNumber(x)
     checkIfNumber(y)
     this.#computePerlinNoise(x, y)
