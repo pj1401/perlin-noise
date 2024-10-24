@@ -35,7 +35,7 @@ test('Changing coordinates', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
   expect(perlin.valueOf()).toBeCloseTo(0.093744)
 
-  perlin.perlin(3.5, 2.1)
+  perlin.generatePerlinNoise(3.5, 2.1)
 
   expect(perlin.valueOf()).toBeCloseTo(0.22739)
 })
@@ -82,7 +82,7 @@ test('Changing coordinates to non number', () => {
   const perlin = new PerlinNoise(1.3, 2.1)
   expect(perlin.valueOf()).toBeCloseTo(0.093744)
 
-  expect(() => { perlin.perlin('1.3', 2.1) }).toThrow(TypeError)
+  expect(() => { perlin.generatePerlinNoise('1.3', 2.1) }).toThrow(TypeError)
 
   expect(perlin.valueOf()).toBeCloseTo(0.093744)
 })
