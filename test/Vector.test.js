@@ -34,7 +34,20 @@ class DotProductTestCase {
 }
 
 test('Dot products', () => {
-  const testCases = [
+  const testCases = getDotProductTestCases()
+
+  for (const testCase of testCases) {
+    testCase.runTest()
+  }
+})
+
+/**
+ * Returns an array of dot product test cases.
+ *
+ * @returns {[DotProductTestCase]} An array of test cases.
+ */
+function getDotProductTestCases () {
+  return [
     new DotProductTestCase(new Vector(-0.7, -0.9), new Vector(0.3, 0.1), -0.3),
     new DotProductTestCase(new Vector(0.358, 0.799), new Vector(0.688, 0.616), 0.738488),
     new DotProductTestCase(new Vector(-7, 3), new Vector(0.219, 0.822), 0.933),
@@ -43,8 +56,4 @@ test('Dot products', () => {
     new DotProductTestCase(new Vector(1, 1), new Vector(-1, -1), -2),
     new DotProductTestCase(new Vector(1, 0), new Vector(0.5, 0.5), 0.5)
   ]
-
-  for (const testCase of testCases) {
-    testCase.runTest()
-  }
-})
+}

@@ -36,14 +36,7 @@ class RandomGradientTestCase {
 
 describe('Randomised gradients', () => {
   test('Generate random gradient', () => {
-    const testCases = [
-      new RandomGradientTestCase(new Point(0, 0), new Vector(1, 0)),
-      new RandomGradientTestCase(new Point(1, 2), new Vector(0.101279206, 0.994858041)),
-      new RandomGradientTestCase(new Point(2, 2), new Vector(0.007886916, -0.999968898)),
-      new RandomGradientTestCase(new Point(1, 3), new Vector(0.937233865, -0.348701422)),
-      new RandomGradientTestCase(new Point(2, 3), new Vector(-0.037835073, 0.999283997)),
-      new RandomGradientTestCase(new Point(100, 200), new Vector(-0.145267742, -0.989392381))
-    ]
+    const testCases = getRandomGradientTestCases()
 
     for (const testCase of testCases) {
       testCase.runTest()
@@ -51,20 +44,7 @@ describe('Randomised gradients', () => {
   })
 
   test('Randomise gradient using a seed', () => {
-    const testCases = [
-      new RandomGradientTestCase(new Point(0, 0), new Vector(0.332503, 0.943102), 1),
-      new RandomGradientTestCase(new Point(0, 0), new Vector(0.976169, -0.21701), 337837103),
-      new RandomGradientTestCase(new Point(1, 2), new Vector(-0.8898, -0.456349), 1),
-      new RandomGradientTestCase(new Point(1, 2), new Vector(0.412568, -0.910927), 337837103),
-      new RandomGradientTestCase(new Point(2, 2), new Vector(-0.399695, -0.916648), 1),
-      new RandomGradientTestCase(new Point(2, 2), new Vector(0.768991, 0.63926), 337837103),
-      new RandomGradientTestCase(new Point(6, 4), new Vector(-0.636747, -0.771073), 1),
-      new RandomGradientTestCase(new Point(6, 4), new Vector(-0.999511, -0.031285), 337837103),
-      new RandomGradientTestCase(new Point(11, 21), new Vector(-0.450734, 0.892658), 1),
-      new RandomGradientTestCase(new Point(11, 21), new Vector(0.845248, -0.534374), 337837103),
-      new RandomGradientTestCase(new Point(100, 200), new Vector(-0.006231, 0.999981), 1),
-      new RandomGradientTestCase(new Point(100, 200), new Vector(0.604265, 0.796783), 337837103)
-    ]
+    const testCases = getRandomGradientTestCasesWithSeed()
 
     for (const testCase of testCases) {
       testCase.runTest()
@@ -83,6 +63,44 @@ describe('Randomised gradients', () => {
     }
   })
 })
+
+/**
+ * Returns an array of random gradient test cases.
+ *
+ * @returns {[RandomGradientTestCase]} An array of test cases.
+ */
+function getRandomGradientTestCases () {
+  return [
+    new RandomGradientTestCase(new Point(0, 0), new Vector(1, 0)),
+    new RandomGradientTestCase(new Point(1, 2), new Vector(0.101279206, 0.994858041)),
+    new RandomGradientTestCase(new Point(2, 2), new Vector(0.007886916, -0.999968898)),
+    new RandomGradientTestCase(new Point(1, 3), new Vector(0.937233865, -0.348701422)),
+    new RandomGradientTestCase(new Point(2, 3), new Vector(-0.037835073, 0.999283997)),
+    new RandomGradientTestCase(new Point(100, 200), new Vector(-0.145267742, -0.989392381))
+  ]
+}
+
+/**
+ * Returns an array of random gradient test cases using seeds.
+ *
+ * @returns {[RandomGradientTestCase]} An array of test cases.
+ */
+function getRandomGradientTestCasesWithSeed () {
+  return [
+    new RandomGradientTestCase(new Point(0, 0), new Vector(0.332503, 0.943102), 1),
+    new RandomGradientTestCase(new Point(0, 0), new Vector(0.976169, -0.21701), 337837103),
+    new RandomGradientTestCase(new Point(1, 2), new Vector(-0.8898, -0.456349), 1),
+    new RandomGradientTestCase(new Point(1, 2), new Vector(0.412568, -0.910927), 337837103),
+    new RandomGradientTestCase(new Point(2, 2), new Vector(-0.399695, -0.916648), 1),
+    new RandomGradientTestCase(new Point(2, 2), new Vector(0.768991, 0.63926), 337837103),
+    new RandomGradientTestCase(new Point(6, 4), new Vector(-0.636747, -0.771073), 1),
+    new RandomGradientTestCase(new Point(6, 4), new Vector(-0.999511, -0.031285), 337837103),
+    new RandomGradientTestCase(new Point(11, 21), new Vector(-0.450734, 0.892658), 1),
+    new RandomGradientTestCase(new Point(11, 21), new Vector(0.845248, -0.534374), 337837103),
+    new RandomGradientTestCase(new Point(100, 200), new Vector(-0.006231, 0.999981), 1),
+    new RandomGradientTestCase(new Point(100, 200), new Vector(0.604265, 0.796783), 337837103)
+  ]
+}
 
 describe('exceptions', () => {
   test('Setting seed to non number', () => {

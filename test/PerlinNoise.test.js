@@ -38,23 +38,7 @@ class PerlinNoiseTestCase {
 describe('Perlin noise values', () => {
   test('Perlin noise with undefined seed', () => {
     const perlin = new PerlinNoise()
-    const testCases = [
-      new PerlinNoiseTestCase(1.3, 2.1, 0.093744),
-      new PerlinNoiseTestCase(5.5, 3.7, -0.177968),
-      new PerlinNoiseTestCase(10.0, 20.0, 0),
-      new PerlinNoiseTestCase(100.0, 200.0, 0),
-      new PerlinNoiseTestCase(0, 0.5, -0.056895),
-      new PerlinNoiseTestCase(0.1, 0.5, -0.05546),
-      new PerlinNoiseTestCase(0.2, 0.5, -0.051994),
-      new PerlinNoiseTestCase(0.3, 0.5, -0.042475),
-      new PerlinNoiseTestCase(0.4, 0.5, -0.023314),
-      new PerlinNoiseTestCase(0.5, 0.5, 0.006776),
-      new PerlinNoiseTestCase(0.5, 0.6, -0.00591),
-      new PerlinNoiseTestCase(0.5, 0.7, -0.028887),
-      new PerlinNoiseTestCase(0.5, 0.8, -0.059371),
-      new PerlinNoiseTestCase(0.5, 0.9, -0.092953),
-      new PerlinNoiseTestCase(0.5, 1, -0.126147)
-    ]
+    const testCases = getPerlinNoiseTestCases()
 
     for (const testCase of testCases) {
       testCase.runTest(perlin)
@@ -62,35 +46,7 @@ describe('Perlin noise values', () => {
   })
 
   test('Using a seed', () => {
-    const perlinGenerators = [
-      new PerlinNoise(4783),
-      new PerlinNoise(6829),
-      new PerlinNoise(7001),
-      new PerlinNoise(24815821)
-    ]
-
-    const testCases = [
-      { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(1.3, 2.1, 0.028378) },
-      { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(5.5, 3.7, -0.223627) },
-      { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(10, 20, 0) },
-      { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(1.3, 2.1, 0.206701) },
-      { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(5.5, 3.7, 0.169030) },
-      { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(10, 20, 0) },
-      { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(1.3, 2.1, -0.166117) },
-      { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(5.5, 3.7, 0.183346) },
-      { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(10, 20, 0) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0, 0.5, -0.3184) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.1, 0.5, -0.391194) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.2, 0.5, -0.442847) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.3, 0.5, -0.45581) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.4, 0.5, -0.421792) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.5, -0.344707) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.6, -0.350501) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.7, -0.325892) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.8, -0.272131) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.9, -0.197691) },
-      { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 1, -0.114196) }
-    ]
+    const testCases = getPerlinNoiseTestCasesWithSeed()
 
     for (const { perlin, testCase } of testCases) {
       testCase.runTest(perlin)
@@ -107,6 +63,68 @@ describe('Perlin noise values', () => {
     expect(perlin.valueOf()).toBeCloseTo(0.22739)
   })
 })
+
+/**
+ * Returns an array of perlin noise test cases.
+ *
+ * @returns {[PerlinNoiseTestCase]} An array of test cases.
+ */
+function getPerlinNoiseTestCases () {
+  return [
+    new PerlinNoiseTestCase(1.3, 2.1, 0.093744),
+    new PerlinNoiseTestCase(5.5, 3.7, -0.177968),
+    new PerlinNoiseTestCase(10.0, 20.0, 0),
+    new PerlinNoiseTestCase(100.0, 200.0, 0),
+    new PerlinNoiseTestCase(0, 0.5, -0.056895),
+    new PerlinNoiseTestCase(0.1, 0.5, -0.05546),
+    new PerlinNoiseTestCase(0.2, 0.5, -0.051994),
+    new PerlinNoiseTestCase(0.3, 0.5, -0.042475),
+    new PerlinNoiseTestCase(0.4, 0.5, -0.023314),
+    new PerlinNoiseTestCase(0.5, 0.5, 0.006776),
+    new PerlinNoiseTestCase(0.5, 0.6, -0.00591),
+    new PerlinNoiseTestCase(0.5, 0.7, -0.028887),
+    new PerlinNoiseTestCase(0.5, 0.8, -0.059371),
+    new PerlinNoiseTestCase(0.5, 0.9, -0.092953),
+    new PerlinNoiseTestCase(0.5, 1, -0.126147)
+  ]
+}
+
+/**
+ * Returns an array of perlin noise test cases using seeds.
+ *
+ * @returns {[PerlinNoiseTestCase]} An array of test cases.
+ */
+function getPerlinNoiseTestCasesWithSeed () {
+  const perlinGenerators = [
+    new PerlinNoise(4783),
+    new PerlinNoise(6829),
+    new PerlinNoise(7001),
+    new PerlinNoise(24815821)
+  ]
+
+  return [
+    { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(1.3, 2.1, 0.028378) },
+    { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(5.5, 3.7, -0.223627) },
+    { perlin: perlinGenerators[0], testCase: new PerlinNoiseTestCase(10, 20, 0) },
+    { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(1.3, 2.1, 0.206701) },
+    { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(5.5, 3.7, 0.169030) },
+    { perlin: perlinGenerators[1], testCase: new PerlinNoiseTestCase(10, 20, 0) },
+    { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(1.3, 2.1, -0.166117) },
+    { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(5.5, 3.7, 0.183346) },
+    { perlin: perlinGenerators[2], testCase: new PerlinNoiseTestCase(10, 20, 0) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0, 0.5, -0.3184) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.1, 0.5, -0.391194) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.2, 0.5, -0.442847) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.3, 0.5, -0.45581) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.4, 0.5, -0.421792) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.5, -0.344707) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.6, -0.350501) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.7, -0.325892) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.8, -0.272131) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 0.9, -0.197691) },
+    { perlin: perlinGenerators[3], testCase: new PerlinNoiseTestCase(0.5, 1, -0.114196) }
+  ]
+}
 
 describe('exceptions', () => {
   test('NaN in coordinates', () => {
