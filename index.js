@@ -61,10 +61,10 @@ export default class PerlinNoise {
    * @param {number} y - The y-coordinate.
    */
   #computePerlinNoise (x, y) {
-    const gridPoints = this.#findGridPoints(x, y)
-    const randomGradients = this.#createRandomGradients(gridPoints)
-    const vectors = this.#computeVectors(gridPoints, x, y)
-    const dotProducts = this.#computeDotProducts(randomGradients, vectors)
+    const gridPoints = this.#getGridPoints(x, y)
+    const randomGradients = this.#getRandomGradients(gridPoints)
+    const vectors = this.#getVectors(gridPoints, x, y)
+    const dotProducts = this.#getDotProducts(randomGradients, vectors)
 
     // The fade smoothens the interpolations.
     const fadeX = this.#fade(vectors[0].x)
@@ -83,7 +83,7 @@ export default class PerlinNoise {
    * @param {number} y - The y-coordinate.
    * @returns {object} The grid points.
    */
-  #findGridPoints (x, y) {
+  #getGridPoints (x, y) {
     const point0 = new Point(Math.floor(x), Math.floor(y))
 
     return {
@@ -100,7 +100,7 @@ export default class PerlinNoise {
    * @param {{Point}} corners - The grid points.
    * @returns {[RandomGradient]} The randomised gradients.
    */
-  #createRandomGradients (corners) {
+  #getRandomGradients (corners) {
     const randomGradients = []
     for (const corner of Object.values(corners)) {
       randomGradients.push(new RandomGradient(corner, this.#seed))
@@ -116,7 +116,7 @@ export default class PerlinNoise {
    * @param {number} y - The y-coordinate.
    * @returns {[Vector]} The vectors.
    */
-  #computeVectors (corners, x, y) {
+  #getVectors (corners, x, y) {
     const dx0 = x - corners.point00.x
     const dy0 = y - corners.point00.y
     const dx1 = x - corners.point11.x
@@ -137,7 +137,7 @@ export default class PerlinNoise {
    * @param {[Vector]} vectors - The vectors.
    * @returns {[number]} The dot products.
    */
-  #computeDotProducts (randomGradients, vectors) {
+  #getDotProducts (randomGradients, vectors) {
     const dotProducts = []
     for (let i = 0; i < randomGradients.length; i++) {
       dotProducts.push(randomGradients[i].dotProduct(vectors[i]))
